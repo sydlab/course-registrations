@@ -1,2 +1,2 @@
 # course-registrations
-An API for managing students to enroll in courses
+An API for managing student course enrollments
