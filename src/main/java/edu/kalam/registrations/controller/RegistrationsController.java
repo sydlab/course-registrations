@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -84,6 +85,7 @@ public class RegistrationsController {
      *
      * @return ResponseEntity indicating the result of the operation
      */
+    @PostMapping(value = "/students/add", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addStudent(@RequestHeader String requestId,
                                              @RequestHeader Student student) {
         LOGGER.info("Received request to add a new student, with request id: {}", requestId);
