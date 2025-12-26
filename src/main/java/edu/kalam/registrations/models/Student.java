@@ -5,35 +5,60 @@ package edu.kalam.registrations.models;
  */
 public class Student {
 
-    private Long id;
-    private String name;
+    private Long studentId;
+    private String studentNumber;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String enrollmentYear;
 
     public Student() {
     }
 
-    public Student(Long id,
-                   String name,
-                   String email) {
-        this.id = id;
-        this.name = name;
+    public Student(Long studentId,
+                   String studentNumber,
+                   String firstName,
+                   String lastName,
+                   String email,
+                   String enrollmentYear) {
+        this.studentId = studentId;
+        this.studentNumber = studentNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
+        this.enrollmentYear = enrollmentYear;
     }
 
-    public Long getId() {
-        return id;
+    public Long getStudentId() {
+        return studentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
-    public String getName() {
-        return name;
+    public String getStudentNumber() {
+        return studentNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -44,4 +69,11 @@ public class Student {
         this.email = email;
     }
 
+    public String getEnrollmentYear() {
+        return enrollmentYear;
+    }
+
+    public void setEnrollmentYear(String enrollmentYear) {
+        this.enrollmentYear = enrollmentYear;
+    }
 }
