@@ -13,7 +13,7 @@ Full enrollment, auth, Docker, and multi-institution are later phases — see [r
 
 ## Delivery approach
 
-`main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.0`**.
+`main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.1`**.
 
 Application code and `data/` setup notes land via later Phase 0 slices (not this docs-only change).
 

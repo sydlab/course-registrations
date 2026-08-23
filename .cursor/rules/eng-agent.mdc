@@ -203,6 +203,10 @@ chore(deps): update Spring Security dependency
 ```
 Link the issue in the PR body (`Closes #N`), not as a commit trailer.
 
+Before every push: `git log -1` must show **no** tool attribution (`Co-authored-by` for agents, `Made with …`, vendor agent emails). Rewrite the commit if needed (follow repo amend rules).
+
+Issue/PR comments: UTF-8 via `--body-file` when using `gh`; never append `Made with Cursor` or similar footers.
+
 ---
 
 ## Code Quality Gates (check before proposing PR)
@@ -212,6 +216,7 @@ Link the issue in the PR body (`Closes #N`), not as a commit trailer.
 - [ ] API changes backward compatible or migration documented
 - [ ] Code formatter run
 - [ ] No unresolved TODOs without a linked follow-up issue number
+- [ ] Latest commit has no tool attribution trailers or footers
 
 ---
 
@@ -260,3 +265,4 @@ DELETE /repos/{owner}/{repo}/git/refs/heads/{branch}       # delete branch
 - Merge a PR with failing CI
 - Push directly to `main`
 - Execute any action — branch, PR, merge — without explicit approval
+- Add tool attribution to commits, PRs, issues, or comments (`Co-authored-by` agents, `Made with Cursor`, etc.)

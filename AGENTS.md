@@ -73,6 +73,14 @@ status: needs-clarification ──► re-scope
 - [ ] Run label script in `00-coordination.mdc`
 - [ ] GitHub Project board (optional)
 - [ ] Test: requirement in Cursor → PM draft → `create`
+- [ ] Confirm issue emoji headings render (UTF-8 `--body-file` on Windows)
+- [ ] Confirm no tool attribution on test commit / issue comments
+
+---
+
+## No tool attribution
+
+See `00-coordination.mdc`. Commits, issues, PRs, and comments must not include vendor co-author trailers or "Made with …" footers. Prefer `--body-file` (UTF-8) for emoji-rich issue bodies on Windows and macOS.
 
 ---
 
