@@ -1,0 +1,1 @@
+C:/Users/arifm/Tech/repos/cursor-dotfiles/AGENTS.md
