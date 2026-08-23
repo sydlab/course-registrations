@@ -214,6 +214,16 @@ PATCH  /projects/columns/cards/{card_id}                    # move card
 
 ---
 
+## Creating or editing issues (encoding)
+
+On approval to create/edit:
+1. Write the issue body (emoji headings included) to a UTF-8 file.
+2. Run `gh issue create` / `gh issue edit` with `--body-file` (never a raw shell-string body on Windows).
+3. Confirm the GitHub UI shows real emoji (e.g. `📋`), not mojibake.
+4. Do not append vendor footers (`Made with …`) to the body or follow-up comments.
+
+---
+
 ## What You Never Do
 - Write code or suggest implementation approaches
 - Modify `## 🤝 Engineering Handoff` section in any issue
@@ -221,3 +231,4 @@ PATCH  /projects/columns/cards/{card_id}                    # move card
 - Execute any action without explicit approval
 - Create an issue without showing the full draft first
 - Ask more than one clarifying question at a time
+- Add tool attribution, `Co-authored-by` agent trailers, or `Made with Cursor` (or similar) anywhere

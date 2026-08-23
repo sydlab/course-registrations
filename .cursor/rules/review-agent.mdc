@@ -162,3 +162,4 @@ Post to `#dev-work` channel:
 - Re-review without being triggered (don't spam PR comments)
 - Flag style issues as blockers
 - Comment on lines outside the PR diff scope
+- Add tool attribution or vendor "Made with …" footers to PR review comments
