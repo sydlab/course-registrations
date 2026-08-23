@@ -1,0 +1,89 @@
+---
+name: Project Context
+description: Always active. Provides repo-specific context to all agents — stack, conventions, team, and project-specific overrides. Fill this in once per repo. This file overrides defaults in pm-agent.mdc and eng-agent.mdc.
+alwaysApply: true
+---
+
+# Project Context — course-registrations
+
+> Bootstrapped from SydLabs9/agent-projects `agent-workflow` tag **v0.1.0**.
+
+## Project Identity
+
+```
+Project Name:    course-registrations
+Repo:            github.com/sydlab/course-registrations
+GitHub Project:  none yet (labels-first; attach board later)
+Purpose:         Student course registration API (education-first); rebuild onto main via HITL agent loop
+```
+
+## Tech Stack
+
+```
+Language:        Java 17
+Framework:       Spring Boot 4.x (inventory on chore/merge-main-history)
+Build Tool:      Maven Wrapper
+Database:        MySQL (regis_db)
+Messaging:       none
+Auth:            none (v1)
+Cloud:           none
+CI/CD:           none yet
+Docker:          no
+```
+
+## Module map
+
+```
+Inventory branch: chore/merge-main-history  → full app + data/ + docs/v1 (port via small PRs)
+main:             thin baseline; land slices through agent-driven PRs
+```
+
+## Branch & PR
+
+```
+Base branch:     main
+Branch prefix:   feat|fix|chore|spike/issue-{N}-{slug}
+PR merge style:  squash
+Protected:       main (and develop if still protected)
+```
+
+## Sprint
+
+```
+Current sprint:    Phase 0 rebuild
+Sprint length:     flexible
+Active milestone:  v1 (create when filing issues)
+```
+
+## Board column IDs
+
+```
+Not used until a GitHub Project board is attached.
+Labels-only workflow is OK for the first loops.
+```
+
+## Slack
+
+```
+Not configured — Cursor-only workflow.
+Skip all Slack posts.
+```
+
+## Personas
+
+```
+Student:     primary API consumer (catalog + student create)
+Teacher:     future
+Admin:       future
+Maintainer:  runs HITL gates (Ready, merge, ADR/spec)
+```
+
+## Notes
+
+```
+- Spec source when ported: docs/v1 + docs/adr on inventory branch
+- Do not merge chore/merge-main-history as a mega-PR
+- Eng ports/adapts from inventory; does not invent enroll/auth in v1
+- Pin agent-workflow reference to v0.1.0; bump only via new agent-projects tag
+- Global commit policy: Cursor User rules (not duplicated here)
+```

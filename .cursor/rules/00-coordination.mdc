@@ -1,0 +1,181 @@
+---
+name: Agent Coordination Protocol
+description: Always active. Defines the approval gate, label contract, agent boundaries, and Slack/GitHub integration rules shared by all agents in this system.
+alwaysApply: true
+---
+
+# Agent Coordination Protocol
+> This file is read by every agent. It is the source of truth for how agents behave,
+> communicate, and hand off work. Do not override these rules in any other agent file.
+
+---
+
+## Core Principle — Semi-Autonomous Operation
+
+Every agent in this system follows a strict **PROPOSE → APPROVE → EXECUTE** loop.
+
+```
+Agent receives input
+    │
+    ▼
+Agent drafts a proposal (shows exactly what it will do)
+    │
+    ▼
+Agent STOPS and waits for explicit human approval
+    │
+    ├─ Cursor: user types trigger word ("create", "start", "send", "go", "approve")
+    └─ Slack:  user reacts ✅ or types "go" in thread
+    │
+    ▼
+Agent executes — exactly what was proposed, nothing more
+    │
+    ▼
+Agent reports result (success, link, or error)
+```
+
+**Never execute without explicit approval. Never do more than what was approved.**
+If scope expands mid-task, stop, re-propose, wait for re-approval.
+
+---
+
+## Approval Trigger Words (Cursor)
+
+| Word | Action |
+|------|--------|
+| `create` | PM Agent creates the proposed GitHub issue |
+| `start` | Eng Agent begins the proposed implementation |
+| `send` | Any agent sends the proposed Slack message |
+| `go` / `approve` | General approval for any proposed action |
+| `skip` / `cancel` | Abort the proposed action |
+| `edit [field]: [value]` | Modify one field before approving e.g. `edit priority: P0` |
+
+---
+
+## The Label Contract — Who Owns What
+
+Labels are the API between agents. Never set a label you don't own.
+
+```
+PM Agent owns:                    Engineering Agent reacts to:
+─────────────────────────────     ────────────────────────────
+status: backlog                   (ignores)
+status: refinement                (ignores)
+status: ready-for-eng       ───►  TRIGGER: Eng Agent picks up
+                                  
+Engineering Agent sets:           PM Agent reacts to:
+────────────────────────────      ─────────────────────────────
+status: in-progress         ───►  Move board card
+status: in-review           ───►  Move card + notify Slack
+status: done                ───►  Close issue + update milestone
+status: blocked             ───►  Escalate in Slack (either agent can set)
+status: needs-clarification ───►  PM re-opens for scoping
+```
+
+---
+
+## Multi-Repo Setup
+
+This system runs across multiple repos. Each repo has:
+
+```
+your-repo/
+├── .cursor/
+│   └── rules/
+│       ├── 00-coordination.mdc    ← copy from agent-workflow/ (this file)
+│       ├── pm-agent.mdc           ← copy from agent-workflow/
+│       ├── eng-agent.mdc          ← copy from agent-workflow/
+│       ├── review-agent.mdc       ← copy from agent-workflow/
+│       └── project-context.mdc    ← THIS REPO ONLY, fill in per project
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   └── pull_request_template.md
+└── AGENTS.md
+```
+
+`project-context.mdc` is the only file that differs per repo.
+All other rules files are identical copies — update agent-workflow/, then sync.
+
+---
+
+## Shared GitHub Label Set
+
+Run this once per repo to create all required labels:
+
+```bash
+# Status labels
+gh label create "status: backlog"            --color "#e2e2e2"
+gh label create "status: refinement"         --color "#f9d71c"
+gh label create "status: ready-for-eng"      --color "#0075ca"
+gh label create "status: in-progress"        --color "#ff9900"
+gh label create "status: in-review"          --color "#8b5cf6"
+gh label create "status: done"               --color "#2ea44f"
+gh label create "status: blocked"            --color "#d73a49"
+gh label create "status: needs-clarification" --color "#e4e669"
+
+# Type labels
+gh label create "type: feature"   --color "#a2eeef"
+gh label create "type: bug"       --color "#d73a49"
+gh label create "type: chore"     --color "#fef2c0"
+gh label create "type: spike"     --color "#c5def5"
+gh label create "type: epic"      --color "#3e4b9e"
+
+# Priority labels
+gh label create "priority: P0"    --color "#b60205"
+gh label create "priority: P1"    --color "#e4432b"
+gh label create "priority: P2"    --color "#f99a2b"
+gh label create "priority: P3"    --color "#fce89a"
+```
+
+---
+
+## Environment Variables (Required by All Agents)
+
+```bash
+GITHUB_TOKEN=<pat: repo + projects + issues scopes>
+GITHUB_OWNER=<your-username-or-org>
+GITHUB_REPO=<current-repo-name>           # set per repo
+GITHUB_PROJECT_NUMBER=<project-number>    # set per repo
+SLACK_BOT_TOKEN=<xoxb-...>              # optional for first loop
+SLACK_CHANNEL_DEV=<#dev-work channel>
+SLACK_CHANNEL_TRACKING=<#project-tracking channel>
+```
+
+---
+
+## Slack Message Format
+
+All agent Slack messages follow this structure so they're scannable:
+
+```
+[EMOJI] [AGENT] | [ACTION] | #[issue-number] [title]
+[one line of context]
+[link if applicable]
+```
+
+Examples:
+```
+🔵 PM Agent | Issue Ready | #42 Add JWT refresh endpoint
+Priority: P1 · Sprint 3 · Waiting for eng pickup
+https://github.com/org/repo/issues/42
+
+⚙️ Eng Agent | Work Started | #42 Add JWT refresh endpoint  
+Branch: feat/issue-42-jwt-refresh · Est: M
+https://github.com/org/repo/tree/feat/issue-42-jwt-refresh
+
+🔍 Review Agent | PR Reviewed | #42 → PR #18
+2 warnings · 0 blockers · All ACs covered
+https://github.com/org/repo/pull/18
+```
+
+---
+
+## What No Agent Ever Does
+
+- Executes without explicit approval
+- Modifies issue sections owned by another agent
+- Sets labels owned by another agent
+- Creates duplicate issues (always search first)
+- Merges a PR with failing CI
+- Closes issues directly (only via `status: done` label)
+- Implements out-of-scope work without a new issue + approval
+- Makes destructive GitHub operations (force push, delete main, etc.)
