@@ -199,7 +199,7 @@ export COURSE_REG_DB_PASSWORD='your-local-password'
 ./mvnw spring-boot:run
 ```
 
-Committed config (`src/main/resources/application.properties`):
+Committed config (`src/main/resources/application.yaml`):
 
 - URL: `jdbc:mysql://localhost:3306/course_registrations`
 - Username: `app_user`

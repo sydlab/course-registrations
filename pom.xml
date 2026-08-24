@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>edu.kalam.registrations</groupId>
+    <groupId>edu.sydlab.courseregistrations</groupId>
     <artifactId>course-registrations</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>course-registrations</name>

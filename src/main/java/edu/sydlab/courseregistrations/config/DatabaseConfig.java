@@ -1,4 +1,4 @@
-package edu.kalam.registrations.config;
+package edu.sydlab.courseregistrations.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;

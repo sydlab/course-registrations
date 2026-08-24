@@ -1,4 +1,4 @@
-package edu.kalam.registrations.controller;
+package edu.sydlab.courseregistrations.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

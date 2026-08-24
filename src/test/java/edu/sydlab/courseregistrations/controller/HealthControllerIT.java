@@ -1,4 +1,4 @@
-package edu.kalam.registrations.controller;
+package edu.sydlab.courseregistrations.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

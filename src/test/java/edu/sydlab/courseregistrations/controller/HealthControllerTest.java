@@ -1,4 +1,4 @@
-package edu.kalam.registrations.controller;
+package edu.sydlab.courseregistrations.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
