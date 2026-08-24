@@ -23,7 +23,7 @@ Purpose:         Student course registration API (education-first); rebuild onto
 Language:        Java 17
 Framework:       Spring Boot 4.x (inventory on chore/merge-main-history)
 Build Tool:      Maven Wrapper
-Database:        MySQL (regis_db)
+Database:        MySQL (course_registrations)
 Messaging:       none
 Auth:            none (v1)
 Cloud:           none

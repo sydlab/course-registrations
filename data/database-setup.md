@@ -7,11 +7,11 @@ Follow these notes to create the local registration database, apply the current 
 | Item | Value |
 |------|--------|
 | Engine | MySQL 8.x |
-| Database name | `regis_db` |
+| Database name | `course_registrations` |
 | App user | `app_user` @ `localhost` |
-| Schema script | [`regis_db.ddl`](regis_db.ddl) |
-| Seed script | [`regis_db.dml`](regis_db.dml) |
-| ER diagram | [`regis_db.mmd`](regis_db.mmd) |
+| Schema script | [`course_registrations.ddl`](course_registrations.ddl) |
+| Seed script | [`course_registrations.dml`](course_registrations.dml) |
+| ER diagram | [`course_registrations.mmd`](course_registrations.mmd) |
 
 Credentials below are **local-dev only**. They are not a production secrets model. Do not reuse them outside a local machine.
 
@@ -20,18 +20,18 @@ Credentials below are **local-dev only**. They are not a production secrets mode
 - MySQL 8.x running on `localhost:3306`
 - A server admin user that can `CREATE DATABASE` and `CREATE USER`
 
-## 1. Create `regis_db` and the local app user
+## 1. Create `course_registrations` and the local app user
 
 Connect as a MySQL admin user, then run:
 
 ```sql
-CREATE DATABASE regis_db;
-USE regis_db;
+CREATE DATABASE course_registrations;
+USE course_registrations;
 
 CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'Kalaam@123';
 
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX
-ON regis_db.* TO 'app_user'@'localhost';
+ON course_registrations.* TO 'app_user'@'localhost';
 
 FLUSH PRIVILEGES;
 ```
@@ -49,10 +49,10 @@ WHERE User = 'app_user';
 From the repo root:
 
 ```bash
-mysql -u app_user -p regis_db < data/regis_db.ddl
+mysql -u app_user -p course_registrations < data/course_registrations.ddl
 ```
 
-Current schema (`data/regis_db.ddl`):
+Current schema (`data/course_registrations.ddl`):
 
 ```sql
 -- Table for tracking the app users connecting
@@ -122,10 +122,10 @@ If the `.ddl` file and the block above ever differ, **the file is the source of 
 ## 3. Apply the current DML
 
 ```bash
-mysql -u app_user -p regis_db < data/regis_db.dml
+mysql -u app_user -p course_registrations < data/course_registrations.dml
 ```
 
-Current seed data (`data/regis_db.dml`):
+Current seed data (`data/course_registrations.dml`):
 
 ```sql
 INSERT INTO users (name, email)
@@ -193,7 +193,7 @@ FROM instructors i
 
 The service is not started in this issue. When it lands, use these **local-dev** values:
 
-- URL: `jdbc:mysql://localhost:3306/regis_db`
+- URL: `jdbc:mysql://localhost:3306/course_registrations`
 - Username: `app_user`
 - Password: `Kalaam@123`
 - Driver: `com.mysql.cj.jdbc.Driver`

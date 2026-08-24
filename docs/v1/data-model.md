@@ -4,7 +4,7 @@ Canonical design lives under `data/` (ER diagram, DDL, DML, setup notes). This d
 
 ## Designed schema (from ER)
 
-Entities in `data/regis_db.mmd`:
+Entities in `data/course_registrations.mmd`:
 
 - `USERS`
 - `DEPARTMENTS`
@@ -42,7 +42,7 @@ Relationships: departments own instructors and courses; instructors teach course
 
 - Runtime path: **JDBC** (`JdbcTemplate`) — see [ADR 0001](../adr/0001-jdbc-persistence.md)
 - Schema application: **manual** SQL from [`data/database-setup.md`](../../data/database-setup.md) (no Flyway/Liquibase in v1)
-- App assumes database `regis_db` and local-dev credentials from that guide already exist
+- App assumes database `course_registrations` and local-dev credentials from that guide already exist
 
 ## Multi-institution
 

@@ -25,7 +25,7 @@ Approval words: `create`, `start`, `send`, `go`, `approve`.
 
 ## Local database
 
-Create MySQL database `regis_db`, apply the current DDL, and load seed data using [data/database-setup.md](data/database-setup.md).
+Create MySQL database `course_registrations`, apply the current DDL, and load seed data using [data/database-setup.md](data/database-setup.md).
 
 That guide shows the locked local-dev database name and the current DDL/DML. Credentials there are local-dev only.
 
@@ -33,7 +33,7 @@ That guide shows the locked local-dev database name and the current DDL/DML. Cre
 
 Target runbook once the service slice lands:
 
-1. Follow [data/database-setup.md](data/database-setup.md) to create `regis_db`.
+1. Follow [data/database-setup.md](data/database-setup.md) to create `course_registrations`.
 2. Set datasource properties from that guide (prefer env/overrides for anything other than local-dev).
 3. Start the app with Maven Wrapper:
 
