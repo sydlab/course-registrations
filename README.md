@@ -63,4 +63,13 @@ curl http://localhost:8080/health
 curl -H "user-id: demo" http://localhost:8080/courses/all
 ```
 
-Add-student lands in a later Phase 0 slice. See [docs/v1/api.md](docs/v1/api.md).
+6. Add a student (`requestId` is required for tracing only). Success returns `200` and `Student added successfully`. Duplicate email returns `500`.
+
+```bash
+curl -X POST http://localhost:8080/students/add \
+  -H "Content-Type: application/json" \
+  -H "requestId: demo-1" \
+  -d '{"firstName":"Ada","lastName":"Lovelace","email":"ada@student.edu","enrollmentYear":2026}'
+```
+
+See [docs/v1/api.md](docs/v1/api.md).
