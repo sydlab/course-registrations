@@ -169,9 +169,22 @@ https://github.com/org/repo/pull/18
 
 ---
 
+## Secrets are not committable
+
+Passwords, tokens, API keys, private keys, and connection strings that embed secrets must not be written to git, issues, or PR bodies.
+
+- “Local-dev,” “sample,” or “docs only” is **not** an exception
+- Docs may name the **variable** and a placeholder (`COURSE_REG_DB_PASSWORD`, `changeme-locally`)
+- Do not commit a usable password (including `application.properties`, README, or setup notes)
+- Show the human the exact files that would receive a secret value; wait for approval before commit or push
+
+---
+
 ## What No Agent Ever Does
 
 - Executes without explicit approval
+- Pushes or tags without the human reviewing the commits first
+- Commits secret values (see above)
 - Modifies issue sections owned by another agent
 - Sets labels owned by another agent
 - Creates duplicate issues (always search first)

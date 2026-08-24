@@ -29,7 +29,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 - Fix known bugs on the three endpoints (see [api.md](./api.md))
 - Align student insert SQL with the schema (`student_number`, column counts)
 - Remove or quarantine dead code on the happy path (`CourseDao` stub, unrelated customer stubs)
-- Document config; treat committed DB credentials as local-dev only, not a secrets model
+- Document config via env names; do not commit password values
 - Publish `docs/v1` and starter ADRs
 - Root README runbook: prerequisites, DB setup, run app, sample requests
 

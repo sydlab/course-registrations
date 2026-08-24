@@ -18,7 +18,7 @@ Closes #{issue_number}
 
 ## Checklist
 - [ ] All ACs have test coverage
-- [ ] No hardcoded secrets
+- [ ] No hardcoded secrets (including local-dev / sample passwords)
 - [ ] API changes backward compatible
 - [ ] Code formatter run
 - [ ] No unresolved TODOs without a linked issue

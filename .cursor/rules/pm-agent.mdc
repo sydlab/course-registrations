@@ -232,3 +232,4 @@ On approval to create/edit:
 - Create an issue without showing the full draft first
 - Ask more than one clarifying question at a time
 - Add tool attribution, `Co-authored-by` agent trailers, or `Made with Cursor` (or similar) anywhere
+- Put real passwords, tokens, or keys in issues, comments, or acceptance criteria (name the env var instead)

@@ -13,7 +13,7 @@ Follow these notes to create the local registration database, apply the current 
 | Seed script | [`course_registrations.dml`](course_registrations.dml) |
 | ER diagram | [`course_registrations.mmd`](course_registrations.mmd) |
 
-Credentials below are **local-dev only**. They are not a production secrets model. Do not reuse them outside a local machine.
+Set the app user password locally. Do not commit a password value.
 
 ## Prerequisites
 
@@ -28,7 +28,8 @@ Connect as a MySQL admin user, then run:
 CREATE DATABASE course_registrations;
 USE course_registrations;
 
-CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'courseregisapp1';
+-- Set COURSE_REG_DB_PASSWORD locally. Do not commit the value.
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY '${COURSE_REG_DB_PASSWORD}';
 
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX
 ON course_registrations.* TO 'app_user'@'localhost';
@@ -191,11 +192,11 @@ FROM instructors i
 
 ## 5. Intended local app connection
 
-The service is not started in this issue. When it lands, use these **local-dev** values:
+The service is not started in this issue. When it lands, use:
 
 - URL: `jdbc:mysql://localhost:3306/course_registrations`
 - Username: `app_user`
-- Password: `courseregisapp1`
+- Password: set locally via `COURSE_REG_DB_PASSWORD` (do not commit)
 - Driver: `com.mysql.cj.jdbc.Driver`
 
 ## Out of scope here

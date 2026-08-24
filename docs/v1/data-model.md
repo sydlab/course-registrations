@@ -42,7 +42,7 @@ Relationships: departments own instructors and courses; instructors teach course
 
 - Runtime path: **JDBC** (`JdbcTemplate`) — see [ADR 0001](../adr/0001-jdbc-persistence.md)
 - Schema application: **manual** SQL from [`data/database-setup.md`](../../data/database-setup.md) (no Flyway/Liquibase in v1)
-- App assumes database `course_registrations` and local-dev credentials from that guide already exist
+- App assumes database `course_registrations` and a local password supplied via env (see that guide)
 
 ## Multi-institution
 

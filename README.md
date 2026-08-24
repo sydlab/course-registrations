@@ -13,7 +13,7 @@ Full enrollment, auth, Docker, and multi-institution are later phases — see [r
 
 ## Delivery approach
 
-`main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.1`**.
+`main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.2`**.
 
 Application code lands via later Phase 0 slices. Local MySQL setup notes are in [`data/`](data/).
 
@@ -27,7 +27,7 @@ Approval words: `create`, `start`, `send`, `go`, `approve`.
 
 Create MySQL database `course_registrations`, apply the current DDL, and load seed data using [data/database-setup.md](data/database-setup.md).
 
-That guide shows the locked local-dev database name and the current DDL/DML. Credentials there are local-dev only.
+That guide shows the locked database name and the current DDL/DML. Set the DB password locally; do not commit it.
 
 ## Run (local)
 
