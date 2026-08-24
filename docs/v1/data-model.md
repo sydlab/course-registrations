@@ -41,8 +41,8 @@ Relationships: departments own instructors and courses; instructors teach course
 ## Persistence approach
 
 - Runtime path: **JDBC** (`JdbcTemplate`) — see [ADR 0001](../adr/0001-jdbc-persistence.md)
-- Schema application: **manual** SQL from `data/` docs (no Flyway/Liquibase in v1)
-- App assumes database `regis_db` and credentials from config already exist
+- Schema application: **manual** SQL from [`data/database-setup.md`](../../data/database-setup.md) (no Flyway/Liquibase in v1)
+- App assumes database `regis_db` and local-dev credentials from that guide already exist
 
 ## Multi-institution
 

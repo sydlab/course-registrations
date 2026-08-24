@@ -15,7 +15,7 @@ Full enrollment, auth, Docker, and multi-institution are later phases — see [r
 
 `main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.1`**.
 
-Application code and `data/` setup notes land via later Phase 0 slices (not this docs-only change).
+Application code lands via later Phase 0 slices. Local MySQL setup notes are in [`data/`](data/).
 
 ## Agents
 
@@ -23,12 +23,18 @@ After bootstrap: see [AGENTS.md](./AGENTS.md) and `.cursor/rules/`.
 
 Approval words: `create`, `start`, `send`, `go`, `approve`.
 
+## Local database
+
+Create MySQL database `regis_db`, apply the current DDL, and load seed data using [data/database-setup.md](data/database-setup.md).
+
+That guide shows the locked local-dev database name and the current DDL/DML. Credentials there are local-dev only.
+
 ## Run (local)
 
-Target runbook once the app and `data/` docs are on the main line:
+Target runbook once the service slice lands:
 
-1. Create MySQL database and schema using scripts/notes under [`data/`](data/).
-2. Set datasource properties (see `src/main/resources/application.properties` for local-dev shape; prefer env/overrides for real secrets).
+1. Follow [data/database-setup.md](data/database-setup.md) to create `regis_db`.
+2. Set datasource properties from that guide (prefer env/overrides for anything other than local-dev).
 3. Start the app with Maven Wrapper:
 
 ```powershell
