@@ -2,68 +2,85 @@
 
 API for managing student course registrations (education-first).
 
-## v1 shared spec
+v1 is a small closable slice: **health check**, **list courses**, and **add student**.
 
-v1 closes a small slice: health check, list courses, and add student. Design docs:
+## Prerequisites
 
-- [v1 design index](docs/v1/README.md)
-- [Architecture decision records](docs/adr/README.md)
+- Java 17
+- MySQL 8.x on `localhost:3306`
+- A MySQL admin user that can `CREATE DATABASE` and `CREATE USER`
+- `curl` (or any HTTP client)
 
-Full enrollment, auth, Docker, and multi-institution are later phases — see [roadmap](docs/v1/roadmap.md).
+The repo includes the Maven Wrapper (`./mvnw` / `.\mvnw.cmd`). You do not need a global Maven install.
 
-## Delivery approach
+## Local runbook
 
-`main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.2`**.
+Follow this path on a fresh machine. Full SQL lives in [database/database-setup.md](database/database-setup.md).
 
-Application code lands via Phase 0 slices. Local MySQL setup notes are in [`database/`](database/).
+### 1. Create the database and app user
 
-## Agents
+Locked local-dev names:
 
-After bootstrap: see [AGENTS.md](./AGENTS.md) and `.cursor/rules/`.
+| Item | Value |
+|------|--------|
+| Database | `course_registrations` |
+| App user | `app_user` @ `localhost` |
+| JDBC URL | `jdbc:mysql://localhost:3306/course_registrations` |
 
-Approval words: `create`, `start`, `send`, `go`, `approve`.
+Pick a password on your machine. Type that value into the `CREATE USER` statement in [database/database-setup.md](database/database-setup.md). MySQL does **not** expand `${COURSE_REG_DB_PASSWORD}` if you paste that placeholder as-is.
 
-## Local database
+This password is **local-dev only**. It is not a production secrets model (no vault, no CI secret store). Do not commit it.
 
-Create MySQL database `course_registrations`, apply the current DDL, and load seed data using [database/database-setup.md](database/database-setup.md).
+### 2. Apply schema and seed data
 
-That guide shows the locked database name and the current DDL/DML. Set the DB password locally; do not commit it.
+From the repo root, as `app_user`:
 
-## Run (local)
+```bash
+mysql -u app_user -p course_registrations < database/course_registrations.ddl
+mysql -u app_user -p course_registrations < database/course_registrations.dml
+```
 
-1. Follow [database/database-setup.md](database/database-setup.md) to create `course_registrations` and the `app_user`.
-2. Set the database password in your shell (do not commit it):
+Seed data is required for a non-empty catalog (`GET /courses/all` returns `200`). An empty `courses` table returns `404`.
+
+### 3. Export the same password and start the app
+
+macOS / Linux:
 
 ```bash
 export COURSE_REG_DB_PASSWORD='your-local-password'
-```
-
-3. Start the app:
-
-```bash
 ./mvnw spring-boot:run
 ```
 
-Windows:
+Windows (PowerShell):
 
 ```powershell
 $env:COURSE_REG_DB_PASSWORD = 'your-local-password'
 .\mvnw.cmd spring-boot:run
 ```
 
-4. Check health (`UP` when MySQL answers, `DOWN` when it does not):
+Committed config (`src/main/resources/application.yaml`) reads `username: app_user` and `password: ${COURSE_REG_DB_PASSWORD}`. The app listens on `http://localhost:8080`.
+
+### 4. Health
 
 ```bash
 curl http://localhost:8080/health
 ```
 
-5. List the course catalog (`user-id` is required for logging only, not authorization). Seeded data returns `200` and a JSON array. An empty catalog returns `404`.
+Expect `UP` when MySQL answers `SELECT 1`, and `DOWN` when it does not. The process still starts if the database is down (`initialization-fail-timeout: -1`).
+
+### 5. Catalog
+
+`user-id` is required for logging only, not authorization.
 
 ```bash
 curl -H "user-id: demo" http://localhost:8080/courses/all
 ```
 
-6. Add a student (`requestId` is required for tracing only). Success returns `200` and `Student added successfully`. Duplicate email returns `500`.
+Expect `200` and a JSON array after seed DML. Empty catalog: `404`.
+
+### 6. Add student
+
+`requestId` is required for tracing only. The server generates `student_number` as `STU-{year}-{seq}`.
 
 ```bash
 curl -X POST http://localhost:8080/students/add \
@@ -72,4 +89,27 @@ curl -X POST http://localhost:8080/students/add \
   -d '{"firstName":"Ada","lastName":"Lovelace","email":"ada@student.edu","enrollmentYear":2026}'
 ```
 
-See [docs/v1/api.md](docs/v1/api.md).
+Expect `200` and `Student added successfully`. Duplicate email: `500` and `Failed to add student`.
+
+Contract details: [docs/v1/api.md](docs/v1/api.md).
+
+## Not in v1
+
+These are later phases — see [roadmap](docs/v1/roadmap.md):
+
+- Enroll / drop / waitlist
+- Authentication and roles
+- Docker Compose, CI, OpenAPI, Flyway/Liquibase
+- Multi-institution / tenant id
+- Secret managers or production credential handling
+
+## Design docs
+
+- [v1 design index](docs/v1/README.md)
+- [Architecture decision records](docs/adr/README.md)
+
+## Agents
+
+Delivery on `main` uses the Cursor HITL loop (PM → Eng → Review) from [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.2`**.
+
+See [AGENTS.md](./AGENTS.md) and `.cursor/rules/`. Approval words: `create`, `start`, `send`, `go`, `approve`.
