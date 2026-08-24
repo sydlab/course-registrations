@@ -34,9 +34,9 @@ Relationships: departments own instructors and courses; instructors teach course
 
 | Model | v1 product path |
 |-------|-----------------|
-| `Course`, `Student` | Yes |
-| `Enrollment`, `Instructor`, `Department` | Modeled; no API |
-| `Customer` | Unrelated / orphan — quarantine in close-out |
+| `Course`, `Student` | Yes — catalog read and add-student |
+
+`Enrollment`, `Instructor`, `Department`, and `Customer` are **not** Java types on `main`. Inventory leftovers (`CourseDao`, customer stubs, unused JPA / `RestClient`) were not ported. Schema-only entities remain in the ER/DDL as design-only.
 
 ## Persistence approach
 

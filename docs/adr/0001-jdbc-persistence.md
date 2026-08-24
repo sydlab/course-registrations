@@ -5,7 +5,7 @@
 
 ## Context
 
-The app includes both `spring-boot-starter-jdbc` and `spring-boot-starter-data-jpa`. Implemented repositories use `JdbcTemplate` SQL. Closing v1 needs a clear persistence story without a rewrite.
+The v1 service uses **Spring JDBC** (`JdbcTemplate`) for course reads and student writes. An older inventory tree also had unused JPA; that dependency was not brought onto `main`.
 
 ## Decision
 
@@ -14,5 +14,5 @@ Keep **JDBC / `JdbcTemplate`** as the v1 persistence approach for course reads a
 ## Consequences
 
 - SQL and schema stay explicit and easy to match to `database/` DDL docs
-- JPA dependency may remain unused until a later deliberate migration
+- JPA is not a v1 dependency; adding it needs a new ADR
 - Developers must maintain SQL strings carefully (column counts, keys)

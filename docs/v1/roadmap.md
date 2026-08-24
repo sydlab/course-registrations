@@ -8,7 +8,7 @@ Education-first **course registration** product. Generalize only if a second dom
 - Fix API/SQL bugs documented in [api.md](./api.md)
 - Docs (`docs/v1`) + starter ADRs
 - README runbook
-- Quarantine dead stubs on the happy path
+- Keep placeholder DAOs off the happy path (inventory stubs were not ported)
 
 **Exit:** [product-scope.md](./product-scope.md) definition of done.
 
