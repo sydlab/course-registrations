@@ -62,6 +62,7 @@ status: needs-clarification ──► re-scope
 - Shared rules: copy from `agent-workflow/.cursor/rules/` (all except `project-context.mdc`)
 - Per repo: fill `project-context.mdc` only
 - Source module: `github.com/SydLabs9/agent-projects` → `agent-workflow/`
+- Releases and consumer sync: parent repo `RELEASE.md` / `CONSUMERS.md` (not copied here)
 
 ---
 

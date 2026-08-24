@@ -22,14 +22,14 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 - Health check against MySQL
 - List all courses
 - Add a student
-- Manual DB setup using existing `data/` DDL/DML docs
+- Manual DB setup using existing `database/` DDL/DML docs
 
 ### Engineering close-out
 
 - Fix known bugs on the three endpoints (see [api.md](./api.md))
 - Align student insert SQL with the schema (`student_number`, column counts)
 - Remove or quarantine dead code on the happy path (`CourseDao` stub, unrelated customer stubs)
-- Document config; treat committed DB credentials as local-dev only, not a secrets model
+- Document config via env names; do not commit password values
 - Publish `docs/v1` and starter ADRs
 - Root README runbook: prerequisites, DB setup, run app, sample requests
 
@@ -53,7 +53,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 ## Definition of done
 
 1. Three endpoints behave correctly and match [api.md](./api.md)
-2. Fresh MySQL + `data/` scripts + app run path works from the root README
+2. Fresh MySQL + `database/` scripts + app run path works from the root README
 3. `docs/v1` and initial ADRs are present
 4. Known gaps are listed for adopters
 5. No intentional double-calls or placeholder DAOs on the happy path

@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Project Context — course-registrations
 
-> Bootstrapped from SydLabs9/agent-projects `agent-workflow` tag **v0.1.1**.
+> Bootstrapped from SydLabs9/agent-projects `agent-workflow` tag **v0.1.2**.
 
 ## Project Identity
 
@@ -23,7 +23,7 @@ Purpose:         Student course registration API (education-first); rebuild onto
 Language:        Java 17
 Framework:       Spring Boot 4.x (inventory on chore/merge-main-history)
 Build Tool:      Maven Wrapper
-Database:        MySQL (regis_db)
+Database:        MySQL (course_registrations)
 Messaging:       none
 Auth:            none (v1)
 Cloud:           none
@@ -34,7 +34,7 @@ Docker:          no
 ## Module map
 
 ```
-Inventory branch: chore/merge-main-history  → full app + data/ + docs/v1 (port via small PRs)
+Inventory branch: chore/merge-main-history  → full app + database/ + docs/v1 (port via small PRs)
 main:             thin baseline; land slices through agent-driven PRs
 ```
 
@@ -84,6 +84,6 @@ Maintainer:  runs HITL gates (Ready, merge, ADR/spec)
 - Spec source when ported: docs/v1 + docs/adr on inventory branch
 - Do not merge chore/merge-main-history as a mega-PR
 - Eng ports/adapts from inventory; does not invent enroll/auth in v1
-- Pin agent-workflow reference to v0.1.1; bump only via new agent-projects tag + re-sync
+- Pin agent-workflow reference to v0.1.2; bump only via new agent-projects tag + re-sync
 - Global commit policy: Cursor User rules (not duplicated here)
 ```

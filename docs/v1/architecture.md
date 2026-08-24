@@ -19,7 +19,7 @@
 HTTP → RegistrationsController
          → CourseService / StudentService
               → CoursesRepo / StudentRepo (JDBC)
-                   → MySQL (regis_db)
+                   → MySQL (course_registrations)
 ```
 
 Config:

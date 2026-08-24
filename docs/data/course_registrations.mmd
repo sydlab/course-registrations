@@ -1,0 +1,55 @@
+erDiagram
+    USERS {
+        BIGINT id PK
+        VARCHAR name
+        VARCHAR email UK
+        TIMESTAMP created_at
+    }
+
+    DEPARTMENTS {
+        BIGINT dept_id PK
+        VARCHAR name
+        VARCHAR code UK
+    }
+
+    INSTRUCTORS {
+        BIGINT instruct_id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UK
+        BIGINT department_id FK
+    }
+
+    COURSES {
+        BIGINT course_id PK
+        VARCHAR code UK
+        VARCHAR name
+        INTEGER credits
+        INTEGER capacity
+        BIGINT department_id FK
+        BIGINT instructor_id FK
+    }
+
+    STUDENTS {
+        BIGINT stu_id PK
+        VARCHAR student_number UK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email UK
+        INTEGER enrollment_year
+    }
+
+    ENROLLMENTS {
+        BIGINT enroll_id PK
+        BIGINT student_id FK
+        BIGINT course_id FK
+        TIMESTAMP enrollment_date
+        VARCHAR grade
+        VARCHAR status
+    }
+
+    DEPARTMENTS ||--o{ INSTRUCTORS : "has"
+    DEPARTMENTS ||--o{ COURSES : "offers"
+    INSTRUCTORS ||--o{ COURSES : "teaches"
+    STUDENTS ||--o{ ENROLLMENTS : "makes"
+    COURSES ||--o{ ENROLLMENTS : "receives"

@@ -19,6 +19,6 @@ Key decisions that go beyond the API contract live in [`docs/adr/`](../adr/).
 ## What “v1 closed” means
 
 - `GET /health`, `GET /courses/all`, and `POST /students/add` work and are documented
-- MySQL setup via existing `data/` scripts is documented in the root README
+- MySQL setup via existing `database/` scripts is documented in the root README
 - Dead stubs are removed or clearly marked off the happy path
 - Gaps (enroll, auth, Docker, multi-org, UI) are explicit so adopters are not surprised

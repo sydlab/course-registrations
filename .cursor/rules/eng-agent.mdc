@@ -212,7 +212,8 @@ Issue/PR comments: UTF-8 via `--body-file` when using `gh`; never append `Made w
 ## Code Quality Gates (check before proposing PR)
 - [ ] Every AC has a corresponding test
 - [ ] No compiler warnings introduced
-- [ ] No hardcoded secrets or environment values
+- [ ] No secret values in code or docs (including local-dev passwords). Use env names and placeholders only
+- [ ] Human reviewed the diff before any push
 - [ ] API changes backward compatible or migration documented
 - [ ] Code formatter run
 - [ ] No unresolved TODOs without a linked follow-up issue number
@@ -264,5 +265,6 @@ DELETE /repos/{owner}/{repo}/git/refs/heads/{branch}       # delete branch
 - Set `status: ready-for-eng` or `status: backlog`
 - Merge a PR with failing CI
 - Push directly to `main`
-- Execute any action — branch, PR, merge — without explicit approval
+- Execute any action — branch, PR, merge, or push — without explicit approval
+- Commit or push secret values, including local-dev / sample passwords
 - Add tool attribution to commits, PRs, issues, or comments (`Co-authored-by` agents, `Made with Cursor`, etc.)

@@ -1,10 +1,10 @@
 # v1 data model
 
-Canonical design lives under `data/` (ER diagram, DDL, DML, setup notes). This doc states what **v1 APIs** use versus what is **design-only**.
+Canonical schema scripts live under `database/`. The ER diagram lives under `docs/data/`. This doc states what **v1 APIs** use versus what is **design-only**.
 
 ## Designed schema (from ER)
 
-Entities in `data/regis_db.mmd`:
+Entities in [`docs/data/course_registrations.mmd`](../data/course_registrations.mmd):
 
 - `USERS`
 - `DEPARTMENTS`
@@ -41,8 +41,8 @@ Relationships: departments own instructors and courses; instructors teach course
 ## Persistence approach
 
 - Runtime path: **JDBC** (`JdbcTemplate`) — see [ADR 0001](../adr/0001-jdbc-persistence.md)
-- Schema application: **manual** SQL from `data/` docs (no Flyway/Liquibase in v1)
-- App assumes database `regis_db` and credentials from config already exist
+- Schema application: **manual** SQL from [`database/database-setup.md`](../../database/database-setup.md) (no Flyway/Liquibase in v1)
+- App assumes database `course_registrations` and a local password supplied via env (see that guide)
 
 ## Multi-institution
 

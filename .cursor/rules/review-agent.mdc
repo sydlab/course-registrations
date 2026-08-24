@@ -70,7 +70,7 @@ Post this as a comment on the PR (automatic, no approval needed — it's read-on
 
 ### 🔒 Security & Safety Checks
 
-- [ ] No hardcoded secrets or credentials
+- [ ] No hardcoded secrets or credentials (including local-dev / sample passwords)
 - [ ] New endpoints have authentication annotations
 - [ ] User input is validated before use
 - [ ] SQL queries use parameterized statements
@@ -119,7 +119,7 @@ Post this as a comment on the PR (automatic, no approval needed — it's read-on
 - A failing or missing test for an explicit AC
 - A `NullPointerException`-prone path with no null check
 - An endpoint with no auth annotation (on a secured service)
-- Hardcoded secret or credential
+- Hardcoded secret or credential, including a local-dev or sample password
 - Logic error that directly contradicts an AC
 - Out-of-scope changes that touch core business logic
 

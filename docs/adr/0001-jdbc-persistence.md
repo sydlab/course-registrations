@@ -13,6 +13,6 @@ Keep **JDBC / `JdbcTemplate`** as the v1 persistence approach for course reads a
 
 ## Consequences
 
-- SQL and schema stay explicit and easy to match to `data/` DDL docs
+- SQL and schema stay explicit and easy to match to `database/` DDL docs
 - JPA dependency may remain unused until a later deliberate migration
 - Developers must maintain SQL strings carefully (column counts, keys)
