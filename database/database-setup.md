@@ -11,7 +11,7 @@ Follow these notes to create the local registration database, apply the current 
 | App user | `app_user` @ `localhost` |
 | Schema script | [`course_registrations.ddl`](course_registrations.ddl) |
 | Seed script | [`course_registrations.dml`](course_registrations.dml) |
-| ER diagram | [`course_registrations.mmd`](course_registrations.mmd) |
+| ER diagram | [`docs/data/course_registrations.mmd`](../docs/data/course_registrations.mmd) |
 
 Set the app user password locally. Do not commit a password value.
 

@@ -1,10 +1,10 @@
 # v1 data model
 
-Canonical design lives under `database/` (ER diagram, DDL, DML, setup notes). This doc states what **v1 APIs** use versus what is **design-only**.
+Canonical schema scripts live under `database/`. The ER diagram lives under `docs/data/`. This doc states what **v1 APIs** use versus what is **design-only**.
 
 ## Designed schema (from ER)
 
-Entities in `database/course_registrations.mmd`:
+Entities in [`docs/data/course_registrations.mmd`](../data/course_registrations.mmd):
 
 - `USERS`
 - `DEPARTMENTS`
