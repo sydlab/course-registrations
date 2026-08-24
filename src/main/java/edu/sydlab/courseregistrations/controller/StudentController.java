@@ -1,5 +1,6 @@
 package edu.sydlab.courseregistrations.controller;
 
+import edu.sydlab.courseregistrations.constants.ApiConstants;
 import edu.sydlab.courseregistrations.model.Student;
 import edu.sydlab.courseregistrations.service.StudentService;
 import org.slf4j.Logger;
@@ -22,14 +23,14 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping(value = "/students/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addStudent(@RequestHeader("requestId") String requestId,
+    @PostMapping(value = ApiConstants.STUDENTS_ADD_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addStudent(@RequestHeader(ApiConstants.REQUEST_ID_HEADER) String requestId,
                                              @RequestBody Student student) {
         LOGGER.info("Received request to add a student, request id: {}", requestId);
         boolean added = studentService.addStudent(student, requestId);
         if (added) {
-            return ResponseEntity.ok("Student added successfully");
+            return ResponseEntity.ok(ApiConstants.STUDENT_ADDED_SUCCESS);
         }
-        return ResponseEntity.internalServerError().body("Failed to add student");
+        return ResponseEntity.internalServerError().body(ApiConstants.STUDENT_ADD_FAILED);
     }
 }

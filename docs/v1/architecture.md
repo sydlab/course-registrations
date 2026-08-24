@@ -48,7 +48,7 @@ Empty list maps to HTTP 404. Response fields match the `courses` table: `courseI
 ### Add student
 
 `POST /students/add` + `requestId` header + JSON body → `StudentController` → `StudentService` → `StudentRepo` JDBC insert.  
-Success is HTTP 200 with `Student added successfully`. Persistence failures (including duplicate email) map to HTTP 500. `student_number` is generated as `STU-{year}-{seq}`.
+Success is HTTP 200 with `Student added successfully`. Persistence failures (including duplicate email) map to HTTP 500. `student_number` is generated as `STU-{year}-{seq}` — see [ADR 0004](../adr/0004-student-number-convention.md).
 
 ## Boundaries
 

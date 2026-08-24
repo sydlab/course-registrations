@@ -1,5 +1,6 @@
 package edu.sydlab.courseregistrations.controller;
 
+import edu.sydlab.courseregistrations.constants.ApiConstants;
 import edu.sydlab.courseregistrations.model.Student;
 import edu.sydlab.courseregistrations.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ class StudentControllerTest {
         ResponseEntity<String> response = controller.addStudent("req-1", student);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Student added successfully", response.getBody());
+        assertEquals(ApiConstants.STUDENT_ADDED_SUCCESS, response.getBody());
         verify(studentService, times(1)).addStudent(student, "req-1");
     }
 
@@ -44,7 +45,7 @@ class StudentControllerTest {
         ResponseEntity<String> response = controller.addStudent("req-1", student);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-        assertEquals("Failed to add student", response.getBody());
+        assertEquals(ApiConstants.STUDENT_ADD_FAILED, response.getBody());
         verify(studentService, times(1)).addStudent(student, "req-1");
     }
 }

@@ -1,5 +1,6 @@
 package edu.sydlab.courseregistrations.data;
 
+import edu.sydlab.courseregistrations.constants.ApiConstants;
 import edu.sydlab.courseregistrations.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class StudentRepoImpl implements StudentRepo {
     public long addStudentAndGetId(Student student, String requestId) {
         int enrollmentYear = student.getEnrollmentYear() != null
             ? student.getEnrollmentYear()
-            : Year.now().getValue();
+            : Year.now(ApiConstants.ZONE_MST).getValue();
         String studentNumber = nextStudentNumber(enrollmentYear);
 
         LOGGER.info("Request ID: {} - Adding student {} ({})", requestId, studentNumber, student.getEmail());
@@ -53,7 +54,7 @@ public class StudentRepoImpl implements StudentRepo {
     }
 
     private String nextStudentNumber(int year) {
-        String prefix = "STU-" + year + "-";
+        String prefix = ApiConstants.STUDENT_NUMBER_PREFIX + year + "-";
         List<String> existing = jdbcTemplate.queryForList(
             "SELECT student_number FROM students WHERE student_number LIKE ?",
             String.class,

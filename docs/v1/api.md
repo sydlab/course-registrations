@@ -55,7 +55,7 @@ JSON object fields from the `courses` table:
 | Success | `200` + `Student added successfully` |
 | Failure | `500` + `Failed to add student` (including duplicate email) |
 
-The server generates `student_number` as `STU-{enrollmentYear}-{seq}` (3-digit per-year sequence). `studentId` / `studentNumber` in the request body are ignored. If `enrollmentYear` is omitted, the current year is used.
+The server generates `student_number` as `STU-{enrollmentYear}-{seq}` (3-digit per-year sequence). See [ADR 0004](../adr/0004-student-number-convention.md). `studentId` / `studentNumber` in the request body are ignored. If `enrollmentYear` is omitted, the current year in America/Denver (Mountain Time) is used.
 
 ### Student fields (request body)
 
@@ -64,7 +64,7 @@ The server generates `student_number` as `STU-{enrollmentYear}-{seq}` (3-digit p
 | `firstName` | `first_name` | required by schema |
 | `lastName` | `last_name` | required by schema |
 | `email` | `email` | unique |
-| `enrollmentYear` | `enrollment_year` | integer; defaults to current year |
+| `enrollmentYear` | `enrollment_year` | integer; defaults to current year in America/Denver |
 
 ---
 

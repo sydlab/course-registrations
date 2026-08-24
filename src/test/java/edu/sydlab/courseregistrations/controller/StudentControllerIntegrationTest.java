@@ -1,5 +1,6 @@
 package edu.sydlab.courseregistrations.controller;
 
+import edu.sydlab.courseregistrations.constants.ApiConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,14 @@ class StudentControllerIntegrationTest {
 
     @Test
     void addStudentCreatesRowWithGeneratedStudentNumber() throws Exception {
-        mockMvc.perform(post("/students/add")
-                .header("requestId", "req-1")
+        mockMvc.perform(post(ApiConstants.STUDENTS_ADD_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {"firstName":"Ada","lastName":"Lovelace","email":"ada@student.edu","enrollmentYear":2026}
                     """))
             .andExpect(status().isOk())
-            .andExpect(content().string("Student added successfully"));
+            .andExpect(content().string(ApiConstants.STUDENT_ADDED_SUCCESS));
 
         String studentNumber = jdbcTemplate.queryForObject(
             "SELECT student_number FROM students WHERE email = ?",
@@ -55,16 +56,16 @@ class StudentControllerIntegrationTest {
 
     @Test
     void addStudentIncrementsStudentNumberForTheSameYear() throws Exception {
-        mockMvc.perform(post("/students/add")
-                .header("requestId", "req-1")
+        mockMvc.perform(post(ApiConstants.STUDENTS_ADD_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {"firstName":"Ada","lastName":"Lovelace","email":"ada@student.edu","enrollmentYear":2026}
                     """))
             .andExpect(status().isOk());
 
-        mockMvc.perform(post("/students/add")
-                .header("requestId", "req-2")
+        mockMvc.perform(post(ApiConstants.STUDENTS_ADD_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {"firstName":"Alan","lastName":"Turing","email":"alan@student.edu","enrollmentYear":2026}
@@ -80,27 +81,27 @@ class StudentControllerIntegrationTest {
 
     @Test
     void addStudentReturnsServerErrorWhenEmailAlreadyExists() throws Exception {
-        mockMvc.perform(post("/students/add")
-                .header("requestId", "req-1")
+        mockMvc.perform(post(ApiConstants.STUDENTS_ADD_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {"firstName":"Ada","lastName":"Lovelace","email":"ada@student.edu","enrollmentYear":2026}
                     """))
             .andExpect(status().isOk());
 
-        mockMvc.perform(post("/students/add")
-                .header("requestId", "req-2")
+        mockMvc.perform(post(ApiConstants.STUDENTS_ADD_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {"firstName":"Other","lastName":"Student","email":"ada@student.edu","enrollmentYear":2026}
                     """))
             .andExpect(status().isInternalServerError())
-            .andExpect(content().string("Failed to add student"));
+            .andExpect(content().string(ApiConstants.STUDENT_ADD_FAILED));
     }
 
     @Test
     void addStudentRequiresRequestIdHeader() throws Exception {
-        mockMvc.perform(post("/students/add")
+        mockMvc.perform(post(ApiConstants.STUDENTS_ADD_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                     {"firstName":"Ada","lastName":"Lovelace","email":"ada@student.edu","enrollmentYear":2026}
