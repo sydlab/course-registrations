@@ -22,7 +22,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 - Health check against MySQL
 - List all courses
 - Add a student
-- Manual DB setup using existing `data/` DDL/DML docs
+- Manual DB setup using existing `database/` DDL/DML docs
 
 ### Engineering close-out
 
@@ -53,7 +53,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 ## Definition of done
 
 1. Three endpoints behave correctly and match [api.md](./api.md)
-2. Fresh MySQL + `data/` scripts + app run path works from the root README
+2. Fresh MySQL + `database/` scripts + app run path works from the root README
 3. `docs/v1` and initial ADRs are present
 4. Known gaps are listed for adopters
 5. No intentional double-calls or placeholder DAOs on the happy path

@@ -15,7 +15,7 @@ Full enrollment, auth, Docker, and multi-institution are later phases — see [r
 
 `main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.2`**.
 
-Application code lands via later Phase 0 slices. Local MySQL setup notes are in [`data/`](data/).
+Application code lands via later Phase 0 slices. Local MySQL setup notes are in [`database/`](database/).
 
 ## Agents
 
@@ -25,7 +25,7 @@ Approval words: `create`, `start`, `send`, `go`, `approve`.
 
 ## Local database
 
-Create MySQL database `course_registrations`, apply the current DDL, and load seed data using [data/database-setup.md](data/database-setup.md).
+Create MySQL database `course_registrations`, apply the current DDL, and load seed data using [database/database-setup.md](database/database-setup.md).
 
 That guide shows the locked database name and the current DDL/DML. Set the DB password locally; do not commit it.
 
@@ -33,7 +33,7 @@ That guide shows the locked database name and the current DDL/DML. Set the DB pa
 
 Target runbook once the service slice lands:
 
-1. Follow [data/database-setup.md](data/database-setup.md) to create `course_registrations`.
+1. Follow [database/database-setup.md](database/database-setup.md) to create `course_registrations`.
 2. Set datasource properties from that guide (prefer env/overrides for anything other than local-dev).
 3. Start the app with Maven Wrapper:
 

@@ -50,10 +50,10 @@ WHERE User = 'app_user';
 From the repo root:
 
 ```bash
-mysql -u app_user -p course_registrations < data/course_registrations.ddl
+mysql -u app_user -p course_registrations < database/course_registrations.ddl
 ```
 
-Current schema (`data/course_registrations.ddl`):
+Current schema (`database/course_registrations.ddl`):
 
 ```sql
 -- Table for tracking the app users connecting
@@ -123,10 +123,10 @@ If the `.ddl` file and the block above ever differ, **the file is the source of 
 ## 3. Apply the current DML
 
 ```bash
-mysql -u app_user -p course_registrations < data/course_registrations.dml
+mysql -u app_user -p course_registrations < database/course_registrations.dml
 ```
 
-Current seed data (`data/course_registrations.dml`):
+Current seed data (`database/course_registrations.dml`):
 
 ```sql
 INSERT INTO users (name, email)

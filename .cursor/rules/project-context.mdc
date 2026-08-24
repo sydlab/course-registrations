@@ -34,7 +34,7 @@ Docker:          no
 ## Module map
 
 ```
-Inventory branch: chore/merge-main-history  → full app + data/ + docs/v1 (port via small PRs)
+Inventory branch: chore/merge-main-history  → full app + database/ + docs/v1 (port via small PRs)
 main:             thin baseline; land slices through agent-driven PRs
 ```
 
