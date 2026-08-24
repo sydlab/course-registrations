@@ -190,15 +190,24 @@ FROM instructors i
          JOIN departments d ON i.department_id = d.dept_id;
 ```
 
-## 5. Intended local app connection
+## 5. Local app connection
 
-The service is not started in this issue. When it lands, use:
+Set a local password when you create `app_user`, then export the same value before starting the app. Do not commit it.
+
+```bash
+export COURSE_REG_DB_PASSWORD='your-local-password'
+./mvnw spring-boot:run
+```
+
+Committed config (`src/main/resources/application.yaml`):
 
 - URL: `jdbc:mysql://localhost:3306/course_registrations`
 - Username: `app_user`
-- Password: set locally via `COURSE_REG_DB_PASSWORD` (do not commit)
+- Password: `${COURSE_REG_DB_PASSWORD}`
 - Driver: `com.mysql.cj.jdbc.Driver`
+
+`GET /health` returns `UP` when MySQL answers `SELECT 1`, and `DOWN` when it does not.
 
 ## Out of scope here
 
-Docker, Flyway/Liquibase, and starting the Spring Boot app. Those belong to later Phase 0 slices.
+Docker and Flyway/Liquibase. Catalog and add-student APIs are later Phase 0 slices.

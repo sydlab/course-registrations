@@ -15,7 +15,7 @@ Full enrollment, auth, Docker, and multi-institution are later phases — see [r
 
 `main` is rebuilt in **small PRs** via the Cursor HITL agent loop (PM → Eng → Review), using [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.2`**.
 
-Application code lands via later Phase 0 slices. Local MySQL setup notes are in [`database/`](database/).
+Application code lands via Phase 0 slices. Local MySQL setup notes are in [`database/`](database/).
 
 ## Agents
 
@@ -31,21 +31,30 @@ That guide shows the locked database name and the current DDL/DML. Set the DB pa
 
 ## Run (local)
 
-Target runbook once the service slice lands:
+1. Follow [database/database-setup.md](database/database-setup.md) to create `course_registrations` and the `app_user`.
+2. Set the database password in your shell (do not commit it):
 
-1. Follow [database/database-setup.md](database/database-setup.md) to create `course_registrations`.
-2. Set datasource properties from that guide (prefer env/overrides for anything other than local-dev).
-3. Start the app with Maven Wrapper:
+```bash
+export COURSE_REG_DB_PASSWORD='your-local-password'
+```
+
+3. Start the app:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Windows:
 
 ```powershell
+$env:COURSE_REG_DB_PASSWORD = 'your-local-password'
 .\mvnw.cmd spring-boot:run
 ```
 
-4. Smoke-test:
+4. Check health (`UP` when MySQL answers, `DOWN` when it does not):
 
-```powershell
+```bash
 curl http://localhost:8080/health
-curl -H "user-id: demo" http://localhost:8080/courses/all
 ```
 
-`POST /students/add` is documented in [docs/v1/api.md](docs/v1/api.md); treat as unstable until request-body binding and related fixes land.
+Catalog and add-student land in later Phase 0 slices. See [docs/v1/api.md](docs/v1/api.md).
