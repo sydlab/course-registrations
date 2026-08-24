@@ -50,18 +50,21 @@ JSON object fields from the `courses` table:
 
 | Item | Value |
 |------|--------|
-| Headers (current code) | `requestId`; student fields incorrectly bound from headers today |
-| Intended v1 contract | `Content-Type: application/json` body with student fields; `requestId` header for tracing |
-| Success | `200` + `"Student added successfully"` (stabilize toward `201` in a later pass if desired) |
-| Failure | `500` + `"Failed to add student"` |
+| Header | `requestId` (required; tracing only, not authorization) |
+| Body | `Content-Type: application/json` with student fields below |
+| Success | `200` + `Student added successfully` |
+| Failure | `500` + `Failed to add student` (including duplicate email) |
 
-### Known issues to fix in v1 close-out
+The server generates `student_number` as `STU-{enrollmentYear}-{seq}` (3-digit per-year sequence). See [ADR 0004](../adr/0004-student-number-convention.md). `studentId` / `studentNumber` in the request body are ignored. If `enrollmentYear` is omitted, the current year in America/Phoenix (MST) is used.
 
-1. Student is bound with `@RequestHeader Student student` — should be `@RequestBody`
-2. `studentService.addStudent` is invoked twice
-3. Insert SQL column/placeholder mismatch and missing `student_number` generation (TODO in repo)
+### Student fields (request body)
 
-Until those are fixed, treat this endpoint as **unstable**.
+| Field | Column | Notes |
+|-------|--------|--------|
+| `firstName` | `first_name` | required by schema |
+| `lastName` | `last_name` | required by schema |
+| `email` | `email` | unique |
+| `enrollmentYear` | `enrollment_year` | integer; defaults to current year in America/Phoenix |
 
 ---
 
