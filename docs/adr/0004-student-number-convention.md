@@ -13,7 +13,7 @@ The default enrollment year (when the client omits `enrollmentYear`) must not de
 
 Generate `student_number` as **`STU-{year}-{seq}`**:
 
-- `{year}` is `enrollmentYear` from the request, or the current year in **America/Denver** (Mountain Time) when omitted
+- `{year}` is `enrollmentYear` from the request, or the current year in **America/Phoenix** (MST, no DST) when omitted
 - `{seq}` is a 3-digit per-year sequence (`001`, `002`, …)
 
 Do not use month-only suffixes. Ignore `studentId` and `studentNumber` on the request body.
@@ -21,5 +21,5 @@ Do not use month-only suffixes. Ignore `studentId` and `studentNumber` on the re
 ## Consequences
 
 - Numbers stay unique under the schema constraint and match local seed shape
-- Default year around New Year follows MST/MDT, not UTC or the host timezone
+- Default year around New Year follows MST (UTC-7), not UTC or the host timezone
 - Sequence generation is in-process (fine for v1 single instance); concurrent inserts of the same year could race later

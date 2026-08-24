@@ -9,7 +9,7 @@ public final class ApiConstants {
     public static final String STUDENT_ADDED_SUCCESS = "Student added successfully";
     public static final String STUDENT_ADD_FAILED = "Failed to add student";
     public static final String STUDENT_NUMBER_PREFIX = "STU-";
-    public static final ZoneId ZONE_MST = ZoneId.of("America/Denver");
+    public static final ZoneId ZONE_MST = ZoneId.of("America/Phoenix");
 
     private ApiConstants() {
     }
