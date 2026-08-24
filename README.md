@@ -57,4 +57,10 @@ $env:COURSE_REG_DB_PASSWORD = 'your-local-password'
 curl http://localhost:8080/health
 ```
 
-Catalog and add-student land in later Phase 0 slices. See [docs/v1/api.md](docs/v1/api.md).
+5. List the course catalog (`user-id` is required for logging only, not authorization). Seeded data returns `200` and a JSON array. An empty catalog returns `404`.
+
+```bash
+curl -H "user-id: demo" http://localhost:8080/courses/all
+```
+
+Add-student lands in a later Phase 0 slice. See [docs/v1/api.md](docs/v1/api.md).

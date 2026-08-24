@@ -16,16 +16,18 @@
 ## Logical layout
 
 ```text
-HTTP → RegistrationsController
-         → CourseService / StudentService
-              → CoursesRepo / StudentRepo (JDBC)
+HTTP → HealthController
+         → JdbcTemplate (SELECT 1)
+
+HTTP → CourseController
+         → CourseService
+              → CoursesRepo (JDBC)
                    → MySQL (course_registrations)
 ```
 
 Config:
 
 - `DatabaseConfig` — `DataSource` + `JdbcTemplate`
-- `HttpClientConfig` — outbound `RestClient` (not on the v1 happy path)
 
 ## Request flows (v1)
 
@@ -35,13 +37,12 @@ Config:
 
 ### List courses
 
-`GET /courses/all` + `user-id` header → `CourseService` → `CoursesRepo` → `List<Course>`  
-Empty list maps to HTTP 404.
+`GET /courses/all` + `user-id` header → `CourseController` → `CourseService` → `CoursesRepo` → `List<Course>`  
+Empty list maps to HTTP 404. Response fields match the `courses` table: `courseId`, `code`, `name`, `credits`, `capacity`, `departmentId`, `instructorId`.
 
 ### Add student
 
-`POST /students/add` → `StudentService` → `StudentRepo` JDBC insert → success/failure response  
-v1 close-out must fix request binding and duplicate service calls (see [api.md](./api.md)).
+`POST /students/add` lands in a later Phase 0 slice. v1 close-out must fix request binding and duplicate service calls (see [api.md](./api.md)).
 
 ## Boundaries
 
