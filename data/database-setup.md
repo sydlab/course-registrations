@@ -28,7 +28,7 @@ Connect as a MySQL admin user, then run:
 CREATE DATABASE course_registrations;
 USE course_registrations;
 
-CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'Kalaam@123';
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'course_registrations_local1';
 
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX
 ON course_registrations.* TO 'app_user'@'localhost';
@@ -195,7 +195,7 @@ The service is not started in this issue. When it lands, use these **local-dev**
 
 - URL: `jdbc:mysql://localhost:3306/course_registrations`
 - Username: `app_user`
-- Password: `Kalaam@123`
+- Password: `course_registrations_local1`
 - Driver: `com.mysql.cj.jdbc.Driver`
 
 ## Out of scope here
