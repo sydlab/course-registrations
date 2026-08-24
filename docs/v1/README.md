@@ -20,5 +20,5 @@ Key decisions that go beyond the API contract live in [`docs/adr/`](../adr/).
 
 - `GET /health`, `GET /courses/all`, and `POST /students/add` work and are documented
 - MySQL setup via existing `database/` scripts is documented in the root README
-- Dead stubs are removed or clearly marked off the happy path
+- Dead stubs are not on the happy path (inventory leftovers were not ported onto `main`)
 - Gaps (enroll, auth, Docker, multi-org, UI) are explicit so adopters are not surprised

@@ -28,7 +28,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 
 - Fix known bugs on the three endpoints (see [api.md](./api.md))
 - Align student insert SQL with the schema (`student_number`, column counts)
-- Remove or quarantine dead code on the happy path (`CourseDao` stub, unrelated customer stubs)
+- Keep placeholder DAOs and unrelated stubs off the happy path (`CourseDao` / `Customer` were not ported onto `main`)
 - Document config via env names; do not commit password values
 - Publish `docs/v1` and starter ADRs
 - Root README runbook: prerequisites, DB setup, run app, sample requests
@@ -42,7 +42,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 - Multi-tenant / institution id
 - Web UI
 - Docker Compose, CI, OpenAPI artifact, Flyway/Liquibase (Phase 1+)
-- Real outbound HTTP via `RestClient` (scaffold may remain unused)
+- Outbound HTTP via `RestClient`
 - Migrating persistence from JDBC to JPA
 
 ## Multi-institution / other domains

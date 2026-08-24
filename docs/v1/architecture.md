@@ -7,11 +7,8 @@
 | Language | Java 17 |
 | Framework | Spring Boot 4.x |
 | HTTP | Spring Web MVC |
-| Persistence (used) | Spring JDBC (`JdbcTemplate`) + MySQL |
-| Persistence (present, unused) | `spring-boot-starter-data-jpa` |
-| Validation | Starter present; not enforced on v1 endpoints yet |
+| Persistence | Spring JDBC (`JdbcTemplate`) + MySQL |
 | Build | Maven Wrapper |
-| Outbound HTTP | `RestClient` bean scaffold; unused in v1 product flows |
 
 ## Logical layout
 
