@@ -30,7 +30,17 @@ Base URL (local): `http://localhost:8080` (default Spring Boot port unless overr
 
 ### Course fields (response)
 
-Typical fields from the domain model: course id/code/name, credits, capacity, department/instructor references as implemented by the repo mapping.
+JSON object fields from the `courses` table:
+
+| Field | Column |
+|-------|--------|
+| `courseId` | `course_id` |
+| `code` | `code` |
+| `name` | `name` |
+| `credits` | `credits` |
+| `capacity` | `capacity` |
+| `departmentId` | `department_id` |
+| `instructorId` | `instructor_id` |
 
 ---
 
