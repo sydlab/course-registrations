@@ -12,6 +12,8 @@ Lives at the **root of each target repo** after bootstrap. Master coordination c
 | **Engineering Agent** | `.cursor/rules/eng-agent.mdc` | `status: ready-for-eng` | Branch, implementation, PR, CI |
 | **Review Agent** | `.cursor/rules/review-agent.mdc` | `Review PR #N` in Cursor | Read-only review, AC coverage |
 
+**Merge gate:** Eng must not propose merge until a Review Agent report is on the PR, or the human writes `skip review` (optional reason). See eng-agent Workflow 5.
+
 Slack triggers in agent rules are optional — use when Slack is configured in `project-context.mdc`.
 
 ---
@@ -37,7 +39,7 @@ Engineering sets                PM reacts
 ────────────────                ──────────
 status: in-progress    ──►    update board / notify team
 status: in-review      ──►    update board / notify team
-status: done           ──►    close issue, milestone
+status: done           ──►    close issue, milestone (Eng checks AC boxes first; PM refuses close if unchecked)
 status: blocked        ──►    escalate
 status: needs-clarification ──► re-scope
 ```
@@ -82,6 +84,8 @@ status: needs-clarification ──► re-scope
 ## No tool attribution
 
 See `00-coordination.mdc`. Commits, issues, PRs, and comments must not include vendor co-author trailers or "Made with …" footers. Prefer `--body-file` (UTF-8) for emoji-rich issue bodies on Windows and macOS.
+
+Before every GitHub body write: scrub the file. After `gh pr create` / `gh issue comment` / similar: re-read the body and strip any footer a tool appended. PR template checklist includes this gate.
 
 ---
 

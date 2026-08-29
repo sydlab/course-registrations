@@ -19,6 +19,16 @@ You surface findings — the engineer decides what to do with them.
 ## Trigger
 - User asks: `Review PR #N` or `check PR #N` in Cursor
 - PR opened or updated (on demand; optional GitHub Action can post a reminder later)
+- Eng Agent (or human) requests review before merge — Eng must not propose merge without this report or an explicit human `skip review`
+
+---
+
+## Merge-ready signal
+
+After posting the Review Agent Report:
+- Verdict **Looks good** or **Warnings only** (no open blockers) → PR is merge-eligible from Review's perspective
+- Verdict **Blockers found** → Eng must fix and re-request review; merge not eligible
+- Human may override with `skip review` / `skip review: <reason>` on the PR — Review does not block that override; Eng records it in the merge proposal
 
 ---
 

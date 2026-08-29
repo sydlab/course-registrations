@@ -139,9 +139,11 @@ Type 'send' to open the PR.
 **STOP. Wait for approval.**
 
 On approval:
-1. Open PR with full template filled
-2. Remove `status: in-progress`, add `status: in-review`
-3. Post to Slack: `🔍 Eng Agent | PR Open | #[N] → PR #[PR] · [link]`
+1. Write the PR body to a UTF-8 `--body-file` from the template; scrub any vendor / "Made with …" footer before create
+2. Open PR with that body file
+3. Immediately `gh pr view --json body` (or equivalent). If a footer appeared, `gh pr edit --body-file` with a clean body before telling the human the PR is ready
+4. Remove `status: in-progress`, add `status: in-review`
+5. Post to Slack: `🔍 Eng Agent | PR Open | #[N] → PR #[PR] · [link]` (no vendor footers on the Slack text or GitHub comment)
 
 ---
 
@@ -163,13 +165,21 @@ When CI runs on your PR:
 
 ## Workflow 5 — Merge & Close
 
-When PR is approved by human reviewer:
+Merge is allowed only when **all** of these are true:
+- Human approved the merge proposal (HITL)
+- CI green when CI exists (otherwise local tests noted on the PR)
+- **Review gate:** a Review Agent report comment is on the PR **or** a human explicitly wrote `skip review` (or `skip review: <reason>`) on the PR / in Cursor
+
+If the review gate is missing, do **not** propose merge. Instead ask the human to run `Review PR #N` or to `skip review`.
+
+When the review gate is satisfied and you are ready to merge:
 
 Propose the merge:
 ```
-⚙️ Eng Agent — Merge Proposal
+Eng Agent — Merge Proposal
 
-PR #[N] is approved and CI is green.
+PR #[N] review gate: [Review Agent report | skip review]
+CI: [green | n/a local tests]
 Action: Squash merge → main, delete branch feat/issue-[N]-[slug]
 
 Type 'go' to merge.
@@ -180,9 +190,10 @@ Type 'go' to merge.
 On approval:
 1. Squash merge PR
 2. Delete branch
-3. Remove `status: in-review`, add `status: done`
-4. Post final comment on issue: `✅ Merged in PR #[N]. All ACs verified. Closing via PM Agent.`
-5. Post to Slack: `✅ Eng Agent | Done | #[N] [title] · PR #[N] merged`
+3. Update the issue body: mark every `## Acceptance Criteria` / `## 🎯 Acceptance Criteria` checkbox `[x]`, or leave unchecked only with an issue comment explaining N/A for that AC
+4. Remove `status: in-review`, add `status: done` only after step 3
+5. Post final comment on issue: `Merged in PR #[N]. All ACs verified (checkboxes updated). Closing via PM Agent.`
+6. Post to Slack: `Eng Agent | Done | #[N] [title] · PR #[N] merged`
 
 ---
 
@@ -205,7 +216,7 @@ Link the issue in the PR body (`Closes #N`), not as a commit trailer.
 
 Before every push: `git log -1` must show **no** tool attribution (`Co-authored-by` for agents, `Made with …`, vendor agent emails). Rewrite the commit if needed (follow repo amend rules).
 
-Issue/PR comments: UTF-8 via `--body-file` when using `gh`; never append `Made with Cursor` or similar footers.
+Issue/PR comments: UTF-8 via `--body-file` when using `gh`; never append `Made with Cursor` or similar footers. After any `gh` create/edit that sets a body, re-read the body and strip leaks immediately (see `00-coordination.mdc`).
 
 ---
 
@@ -218,16 +229,19 @@ Issue/PR comments: UTF-8 via `--body-file` when using `gh`; never append `Made w
 - [ ] Code formatter run
 - [ ] No unresolved TODOs without a linked follow-up issue number
 - [ ] Latest commit has no tool attribution trailers or footers
+- [ ] PR body file has no vendor / "Made with …" footer (and post-create view is clean)
 
 ---
 
 ## Definition of Done
 `status: done` is set ONLY when ALL of these are true:
 - [ ] PR merged to `main`
-- [ ] CI fully green (build + test + lint)
+- [ ] CI fully green (build + test + lint) when CI exists; otherwise tests run locally and noted on the PR
 - [ ] Every AC from the issue demonstrably met
+- [ ] Every AC checkbox on the issue body is `[x]`, or an issue comment explains N/A per unchecked AC
 - [ ] No regressions in adjacent modules
 - [ ] Follow-up issues created for any deferred scope
+- [ ] No vendor attribution on the merge commit, PR body, or closing comments
 
 ---
 
