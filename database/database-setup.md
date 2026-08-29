@@ -13,7 +13,7 @@ Follow these notes to create the local registration database, apply the current 
 | Seed script | [`course_registrations.dml`](course_registrations.dml) |
 | ER diagram | [`docs/data/course_registrations.mmd`](../docs/data/course_registrations.mmd) |
 
-Set the app user password locally. Do not commit a password value.
+Set the app user password locally. This is a **local-dev** password only — not a production secrets model. Do not commit a password value.
 
 ## Prerequisites
 
@@ -22,14 +22,15 @@ Set the app user password locally. Do not commit a password value.
 
 ## 1. Create `course_registrations` and the local app user
 
-Connect as a MySQL admin user, then run:
+Connect as a MySQL admin user, then run the statements below.
+
+MySQL does **not** expand environment variables in SQL. Replace `'your-local-password'` with the same value you will export as `COURSE_REG_DB_PASSWORD`. Do not commit that value.
 
 ```sql
 CREATE DATABASE course_registrations;
 USE course_registrations;
 
--- Set COURSE_REG_DB_PASSWORD locally. Do not commit the value.
-CREATE USER 'app_user'@'localhost' IDENTIFIED BY '${COURSE_REG_DB_PASSWORD}';
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'your-local-password';
 
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX
 ON course_registrations.* TO 'app_user'@'localhost';
@@ -192,7 +193,7 @@ FROM instructors i
 
 ## 5. Local app connection
 
-Set a local password when you create `app_user`, then export the same value before starting the app. Do not commit it.
+The password you typed for `app_user` is **local-dev only**. Export the same value before starting the app. Do not commit it. This is not a production secrets model.
 
 ```bash
 export COURSE_REG_DB_PASSWORD='your-local-password'
@@ -203,11 +204,11 @@ Committed config (`src/main/resources/application.yaml`):
 
 - URL: `jdbc:mysql://localhost:3306/course_registrations`
 - Username: `app_user`
-- Password: `${COURSE_REG_DB_PASSWORD}`
+- Password: `${COURSE_REG_DB_PASSWORD}` (Spring expands this from the environment)
 - Driver: `com.mysql.cj.jdbc.Driver`
 
-`GET /health` returns `UP` when MySQL answers `SELECT 1`, and `DOWN` when it does not.
+Sample requests for health, catalog, and add-student are in the root [README.md](../README.md).
 
 ## Out of scope here
 
-Docker and Flyway/Liquibase. Catalog and add-student APIs are later Phase 0 slices.
+Docker and Flyway/Liquibase. Those stay later phases.
