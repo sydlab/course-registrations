@@ -173,9 +173,14 @@ No approval needed for read-only queries.
 When Eng Agent sets `status: in-progress`, `status: in-review`, or `status: done`:
 - Move the GitHub Project board card automatically (no approval needed — this is bookkeeping)
 - Post Slack update per the coordination format in `00-coordination.mdc`
-- On `status: done`: propose issue closure:
+- On `status: done`: before proposing closure, verify issue AC checkboxes are all `[x]` (or an Eng comment explains N/A). If unchecked without explanation, comment and ask Eng to fix before close:
   ```
-  ✅ PM Agent — Issue #[N] marked done by Engineering.
+  PM Agent — Issue #[N] marked done by Engineering.
+  Blocked close: AC checkboxes incomplete.
+  ```
+  When ACs are complete, propose issue closure:
+  ```
+  PM Agent — Issue #[N] marked done by Engineering.
   Action: Close issue + update milestone progress.
   Type 'go' to confirm closure.
   ```

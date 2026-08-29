@@ -110,6 +110,6 @@ These are later phases — see [roadmap](docs/v1/roadmap.md):
 
 ## Agents
 
-Delivery on `main` uses the Cursor HITL loop (PM → Eng → Review) from [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.2`**.
+Delivery on `main` uses the Cursor HITL loop (PM → Eng → Review) from [SydLabs9/agent-projects](https://github.com/SydLabs9/agent-projects) **`agent-workflow` @ `v0.1.3`**.
 
 See [AGENTS.md](./AGENTS.md) and `.cursor/rules/`. Approval words: `create`, `start`, `send`, `go`, `approve`.

@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Project Context — course-registrations
 
-> Bootstrapped from SydLabs9/agent-projects `agent-workflow` tag **v0.1.2**.
+> Bootstrapped from SydLabs9/agent-projects `agent-workflow` tag **v0.1.3**.
 
 ## Project Identity
 
@@ -84,6 +84,6 @@ Maintainer:  runs HITL gates (Ready, merge, ADR/spec)
 - Spec source when ported: docs/v1 + docs/adr on inventory branch
 - Do not merge chore/merge-main-history as a mega-PR
 - Eng ports/adapts from inventory; does not invent enroll/auth in v1
-- Pin agent-workflow reference to v0.1.2; bump only via new agent-projects tag + re-sync
+- Pin agent-workflow reference to v0.1.3; bump only via new agent-projects tag + re-sync
 - Global commit policy: Cursor User rules (not duplicated here)
 ```
