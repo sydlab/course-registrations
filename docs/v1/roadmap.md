@@ -4,7 +4,7 @@ Education-first **course registration** product. Generalize only if a second dom
 
 ## Phase 0 — Close v1 (current)
 
-- Stabilize health, list courses, add student, enroll with capacity
+- Stabilize health, list courses, add student, enroll with capacity, drop
 - Fix API/SQL bugs documented in [api.md](./api.md)
 - Docs (`docs/v1`) + starter ADRs
 - README runbook
@@ -20,7 +20,6 @@ Education-first **course registration** product. Generalize only if a second dom
 
 ## Phase 2 — Registration follow-ups
 
-- Drop APIs on `ENROLLMENTS`
 - Waitlist only if needed
 - Keep domain language: student, course, enrollment
 

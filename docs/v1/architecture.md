@@ -57,6 +57,11 @@ Success is HTTP 200 with `Student added successfully`. Persistence failures (inc
 `POST /enrollments/add` + `requestId` header + JSON `{ studentId, courseId }` → `EnrollmentController` → `EnrollmentService` → `EnrollmentRepo` JDBC insert.  
 Success is HTTP 200 with `Enrolled successfully`. Duplicate student+course, course at capacity, missing course, and persistence failures map to HTTP 500 with `Failed to enroll`. Active seat count is `ENROLLED` rows for that course.
 
+### Drop
+
+`POST /enrollments/drop` + `requestId` header + JSON `{ studentId, courseId }` → `EnrollmentController` → `EnrollmentService` → `EnrollmentRepo` JDBC delete.  
+Success is HTTP 200 with `Dropped successfully`. Missing enrollment and persistence failures map to HTTP 500 with `Failed to drop`.
+
 ## Boundaries
 
 - **In process:** all v1 business logic runs in this service

@@ -48,4 +48,28 @@ class EnrollmentControllerTest {
         assertEquals(ApiConstants.ENROLL_FAILED, response.getBody());
         verify(enrollmentService, times(1)).enroll(enrollment, "req-1");
     }
+
+    @Test
+    void dropReturnsOkWhenDropSucceeds() {
+        Enrollment enrollment = new Enrollment(null, 1L, 2L, null, null);
+        when(enrollmentService.drop(enrollment, "req-1")).thenReturn(true);
+
+        ResponseEntity<String> response = controller.drop("req-1", enrollment);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ApiConstants.DROPPED_SUCCESS, response.getBody());
+        verify(enrollmentService, times(1)).drop(enrollment, "req-1");
+    }
+
+    @Test
+    void dropReturnsServerErrorWhenDropFails() {
+        Enrollment enrollment = new Enrollment(null, 1L, 2L, null, null);
+        when(enrollmentService.drop(enrollment, "req-1")).thenReturn(false);
+
+        ResponseEntity<String> response = controller.drop("req-1", enrollment);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(ApiConstants.DROP_FAILED, response.getBody());
+        verify(enrollmentService, times(1)).drop(enrollment, "req-1");
+    }
 }
