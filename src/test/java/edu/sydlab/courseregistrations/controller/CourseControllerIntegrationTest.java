@@ -24,6 +24,7 @@ class CourseControllerIntegrationTest {
 
     @BeforeEach
     void clearCourses() {
+        jdbcTemplate.update("DELETE FROM enrollments");
         jdbcTemplate.update("DELETE FROM courses");
     }
 
