@@ -25,6 +25,11 @@ HTTP → StudentController
          → StudentService
               → StudentRepo (JDBC)
                    → MySQL (course_registrations)
+
+HTTP → EnrollmentController
+         → EnrollmentService
+              → EnrollmentRepo (JDBC)
+                   → MySQL (course_registrations)
 ```
 
 Config:
@@ -46,6 +51,11 @@ Empty list maps to HTTP 404. Response fields match the `courses` table: `courseI
 
 `POST /students/add` + `requestId` header + JSON body → `StudentController` → `StudentService` → `StudentRepo` JDBC insert.  
 Success is HTTP 200 with `Student added successfully`. Persistence failures (including duplicate email) map to HTTP 500. `student_number` is generated as `STU-{year}-{seq}` — see [ADR 0004](../adr/0004-student-number-convention.md).
+
+### Enroll
+
+`POST /enrollments/add` + `requestId` header + JSON `{ studentId, courseId }` → `EnrollmentController` → `EnrollmentService` → `EnrollmentRepo` JDBC insert.  
+Success is HTTP 200 with `Enrolled successfully`. Duplicate student+course, course at capacity, missing course, and persistence failures map to HTTP 500 with `Failed to enroll`. Active seat count is `ENROLLED` rows for that course.
 
 ## Boundaries
 

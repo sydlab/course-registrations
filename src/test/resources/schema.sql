@@ -16,3 +16,15 @@ CREATE TABLE IF NOT EXISTS students (
     email VARCHAR(100) UNIQUE NOT NULL,
     enrollment_year INTEGER NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS enrollments (
+    enroll_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    student_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
+    enrollment_date TIMESTAMP NOT NULL,
+    grade VARCHAR(2),
+    status VARCHAR(20) NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES students(stu_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id),
+    UNIQUE(student_id, course_id)
+);

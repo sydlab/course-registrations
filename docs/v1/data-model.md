@@ -19,14 +19,14 @@ Relationships: departments own instructors and courses; instructors teach course
 
 | Entity | Usage |
 |--------|--------|
-| `COURSES` | Read via list-courses |
-| `STUDENTS` | Insert via add-student |
+| `COURSES` | Read via list-courses; capacity read on enroll |
+| `STUDENTS` | Insert via add-student; referenced on enroll |
+| `ENROLLMENTS` | Insert via enroll |
 
 ## Design-only in v1 (not exposed)
 
 | Entity | Notes |
 |--------|--------|
-| `ENROLLMENTS` | Core of Phase 2 registration |
 | `INSTRUCTORS` / `DEPARTMENTS` | Needed for richer catalog later |
 | `USERS` | Auth/identity later |
 
@@ -34,9 +34,9 @@ Relationships: departments own instructors and courses; instructors teach course
 
 | Model | v1 product path |
 |-------|-----------------|
-| `Course`, `Student` | Yes — catalog read and add-student |
+| `Course`, `Student`, `Enrollment` | Yes — catalog read, add-student, and enroll |
 
-`Enrollment`, `Instructor`, `Department`, and `Customer` are **not** Java types on `main`. Inventory leftovers (`CourseDao`, customer stubs, unused JPA / `RestClient`) were not ported. Schema-only entities remain in the ER/DDL as design-only.
+`Instructor`, `Department`, and `Customer` are **not** Java types on `main`. Inventory leftovers (`CourseDao`, customer stubs, unused JPA / `RestClient`) were not ported. Schema-only entities remain in the ER/DDL as design-only.
 
 ## Persistence approach
 

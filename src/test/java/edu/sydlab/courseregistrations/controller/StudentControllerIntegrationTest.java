@@ -27,6 +27,7 @@ class StudentControllerIntegrationTest {
 
     @BeforeEach
     void clearStudents() {
+        jdbcTemplate.update("DELETE FROM enrollments");
         jdbcTemplate.update("DELETE FROM students");
     }
 

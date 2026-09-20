@@ -2,7 +2,7 @@
 
 High-level design for **v1**: a closable slice of a **student course registration** API.
 
-This product is education-first (students, courses, later enrollments). Other domains (training, events, bookings) are a future reuse story, not the v1 design driver.
+This product is education-first (students, courses, enrollments). Other domains (training, events, bookings) are a future reuse story, not the v1 design driver.
 
 ## Documents
 
@@ -18,7 +18,7 @@ Key decisions that go beyond the API contract live in [`docs/adr/`](../adr/).
 
 ## What “v1 closed” means
 
-- `GET /health`, `GET /courses/all`, and `POST /students/add` work and are documented
+- `GET /health`, `GET /courses/all`, `POST /students/add`, and `POST /enrollments/add` work and are documented
 - MySQL setup via existing `database/` scripts is documented in the root README
 - Dead stubs are not on the happy path (inventory leftovers were not ported onto `main`)
-- Gaps (enroll, auth, Docker, multi-org, UI) are explicit so adopters are not surprised
+- Gaps (drop, waitlist, auth, Docker, multi-org, UI) are explicit so adopters are not surprised

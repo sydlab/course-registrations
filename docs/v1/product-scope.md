@@ -10,7 +10,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 
 | Role | v1 |
 |------|-----|
-| Student | Implicit consumer of catalog + student-create APIs |
+| Student | Implicit consumer of catalog, student-create, and enroll APIs |
 | Teacher | Out of scope (future) |
 | Admin | Out of scope (future) |
 | Auth | None — headers such as `user-id` / `requestId` are tracing only |
@@ -22,11 +22,12 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 - Health check against MySQL
 - List all courses
 - Add a student
+- Enroll an existing student in a course, with capacity enforcement
 - Manual DB setup using existing `database/` DDL/DML docs
 
 ### Engineering close-out
 
-- Fix known bugs on the three endpoints (see [api.md](./api.md))
+- Fix known bugs on the four endpoints (see [api.md](./api.md))
 - Align student insert SQL with the schema (`student_number`, column counts)
 - Keep placeholder DAOs and unrelated stubs off the happy path (`CourseDao` / `Customer` were not ported onto `main`)
 - Document config via env names; do not commit password values
@@ -35,7 +36,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 
 ## Out of scope
 
-- Enroll / drop / waitlist / capacity enforcement in the API
+- Drop / waitlist
 - Prerequisites, schedule conflicts, grades, payments, transcripts
 - Authentication and RBAC
 - Teacher / admin endpoints
@@ -52,7 +53,7 @@ Ship a **small, closable course-registrations API** — not a real-school produc
 
 ## Definition of done
 
-1. Three endpoints behave correctly and match [api.md](./api.md)
+1. Four endpoints behave correctly and match [api.md](./api.md)
 2. Fresh MySQL + `database/` scripts + app run path works from the root README
 3. `docs/v1` and initial ADRs are present
 4. Known gaps are listed for adopters

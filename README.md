@@ -2,7 +2,7 @@
 
 API for managing student course registrations (education-first).
 
-v1 is a small closable slice: **health check**, **list courses**, and **add student**.
+v1 is a small closable slice: **health check**, **list courses**, **add student**, and **enroll**.
 
 ## Prerequisites
 
@@ -91,13 +91,26 @@ curl -X POST http://localhost:8080/students/add \
 
 Expect `200` and `Student added successfully`. Duplicate email: `500` and `Failed to add student`.
 
+### 7. Enroll
+
+`requestId` is required for tracing only. Seed DML already enrolls student `1` in course `1`; the sample below uses course `2` (`CS202`).
+
+```bash
+curl -X POST http://localhost:8080/enrollments/add \
+  -H "Content-Type: application/json" \
+  -H "requestId: demo-2" \
+  -d '{"studentId":1,"courseId":2}'
+```
+
+Expect `200` and `Enrolled successfully`. Duplicate student+course or a full course: `500` and `Failed to enroll`.
+
 Contract details: [docs/v1/api.md](docs/v1/api.md).
 
 ## Not in v1
 
 These are later phases — see [roadmap](docs/v1/roadmap.md):
 
-- Enroll / drop / waitlist
+- Drop / waitlist
 - Authentication and roles
 - Docker Compose, CI, OpenAPI, Flyway/Liquibase
 - Multi-institution / tenant id

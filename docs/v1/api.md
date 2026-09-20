@@ -68,10 +68,33 @@ The server generates `student_number` as `STU-{enrollmentYear}-{seq}` (3-digit p
 
 ---
 
+## `POST /enrollments/add`
+
+**Purpose:** Enroll an existing student in an existing course.
+
+| Item | Value |
+|------|--------|
+| Auth | None |
+| Header | `requestId` (required; tracing only, not authorization) |
+| Body | `Content-Type: application/json` with `studentId` and `courseId` |
+| Success | `200` + `Enrolled successfully` |
+| Failure | `500` + `Failed to enroll` (duplicate student+course, course at capacity, missing student/course, or persistence error) |
+
+Inserts one `enrollments` row: `student_id`, `course_id`, `enrollment_date` (server clock), `status` = `ENROLLED`. Duplicate pairs are rejected by `UNIQUE(student_id, course_id)`. Capacity counts rows with `status = ENROLLED` against `courses.capacity`. There is no waitlist.
+
+### Enrollment fields (request body)
+
+| Field | Column | Notes |
+|-------|--------|--------|
+| `studentId` | `student_id` | existing `students.stu_id` |
+| `courseId` | `course_id` | existing `courses.course_id` |
+
+---
+
 ## Not in v1
 
-- `POST /enrollments` (or equivalent)
 - Drop / swap section
+- Waitlist
 - Teacher or admin routes
 - Standardized error body (e.g. RFC 7807)
 - OpenAPI artifact (optional Phase 1)
