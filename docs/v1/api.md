@@ -91,9 +91,24 @@ Inserts one `enrollments` row: `student_id`, `course_id`, `enrollment_date` (ser
 
 ---
 
+## `POST /enrollments/drop`
+
+**Purpose:** Drop an existing student+course enrollment so the seat no longer counts toward capacity.
+
+| Item | Value |
+|------|--------|
+| Auth | None |
+| Header | `requestId` (required; tracing only, not authorization) |
+| Body | `Content-Type: application/json` with `studentId` and `courseId` |
+| Success | `200` + `Dropped successfully` |
+| Failure | `500` + `Failed to drop` (missing enrollment or persistence error) |
+
+Deletes the matching `enrollments` row. Request fields are the same as enroll.
+
+---
+
 ## Not in v1
 
-- Drop / swap section
 - Waitlist
 - Teacher or admin routes
 - Standardized error body (e.g. RFC 7807)

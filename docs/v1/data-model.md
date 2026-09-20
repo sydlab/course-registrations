@@ -21,7 +21,7 @@ Relationships: departments own instructors and courses; instructors teach course
 |--------|--------|
 | `COURSES` | Read via list-courses; capacity read on enroll |
 | `STUDENTS` | Insert via add-student; referenced on enroll |
-| `ENROLLMENTS` | Insert via enroll |
+| `ENROLLMENTS` | Insert via enroll; delete via drop |
 
 ## Design-only in v1 (not exposed)
 

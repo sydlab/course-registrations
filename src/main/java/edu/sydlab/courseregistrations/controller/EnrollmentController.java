@@ -33,4 +33,15 @@ public class EnrollmentController {
         }
         return ResponseEntity.internalServerError().body(ApiConstants.ENROLL_FAILED);
     }
+
+    @PostMapping(value = ApiConstants.ENROLLMENTS_DROP_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> drop(@RequestHeader(ApiConstants.REQUEST_ID_HEADER) String requestId,
+                                       @RequestBody Enrollment enrollment) {
+        LOGGER.info("Received request to drop, request id: {}", requestId);
+        boolean dropped = enrollmentService.drop(enrollment, requestId);
+        if (dropped) {
+            return ResponseEntity.ok(ApiConstants.DROPPED_SUCCESS);
+        }
+        return ResponseEntity.internalServerError().body(ApiConstants.DROP_FAILED);
+    }
 }

@@ -57,4 +57,28 @@ public class EnrollmentService {
             return false;
         }
     }
+
+    public boolean drop(Enrollment enrollment, String requestId) {
+        LOGGER.info("Request ID: {} - Dropping student {} from course {}",
+            requestId, enrollment.getStudentId(), enrollment.getCourseId());
+
+        if (enrollment.getStudentId() == null || enrollment.getCourseId() == null) {
+            LOGGER.warn("Request ID: {} - Missing studentId or courseId", requestId);
+            return false;
+        }
+
+        try {
+            int deleted = enrollmentRepo.deleteEnrollment(enrollment.getStudentId(), enrollment.getCourseId());
+            if (deleted == 0) {
+                LOGGER.warn("Request ID: {} - No enrollment for student {} in course {}",
+                    requestId, enrollment.getStudentId(), enrollment.getCourseId());
+                return false;
+            }
+            return true;
+        } catch (DataAccessException ex) {
+            LOGGER.warn("Request ID: {} - Failed to drop student {} from course {}",
+                requestId, enrollment.getStudentId(), enrollment.getCourseId(), ex);
+            return false;
+        }
+    }
 }

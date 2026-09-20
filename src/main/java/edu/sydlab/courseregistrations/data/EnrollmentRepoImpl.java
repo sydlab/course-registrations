@@ -23,6 +23,8 @@ public class EnrollmentRepoImpl implements EnrollmentRepo {
         "SELECT COUNT(*) FROM enrollments WHERE course_id = ? AND status = ?";
     private static final String INSERT_ENROLLMENT =
         "INSERT INTO enrollments (student_id, course_id, enrollment_date, status) VALUES (?, ?, ?, ?)";
+    private static final String DELETE_ENROLLMENT =
+        "DELETE FROM enrollments WHERE student_id = ? AND course_id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -62,5 +64,11 @@ public class EnrollmentRepoImpl implements EnrollmentRepo {
 
         Number key = keyHolder.getKey();
         return key == null ? 0 : key.longValue();
+    }
+
+    @Override
+    public int deleteEnrollment(long studentId, long courseId) {
+        LOGGER.info("Deleting enrollment for student {} in course {}", studentId, courseId);
+        return jdbcTemplate.update(DELETE_ENROLLMENT, studentId, courseId);
     }
 }

@@ -2,7 +2,7 @@
 
 API for managing student course registrations (education-first).
 
-v1 is a small closable slice: **health check**, **list courses**, **add student**, and **enroll**.
+v1 is a small closable slice: **health check**, **list courses**, **add student**, **enroll**, and **drop**.
 
 ## Prerequisites
 
@@ -104,13 +104,26 @@ curl -X POST http://localhost:8080/enrollments/add \
 
 Expect `200` and `Enrolled successfully`. Duplicate student+course or a full course: `500` and `Failed to enroll`.
 
+### 8. Drop
+
+`requestId` is required for tracing only. Use the same `studentId` and `courseId` as enroll.
+
+```bash
+curl -X POST http://localhost:8080/enrollments/drop \
+  -H "Content-Type: application/json" \
+  -H "requestId: demo-3" \
+  -d '{"studentId":1,"courseId":2}'
+```
+
+Expect `200` and `Dropped successfully`. Missing enrollment: `500` and `Failed to drop`.
+
 Contract details: [docs/v1/api.md](docs/v1/api.md).
 
 ## Not in v1
 
 These are later phases — see [roadmap](docs/v1/roadmap.md):
 
-- Drop / waitlist
+- Waitlist
 - Authentication and roles
 - Docker Compose, CI, OpenAPI, Flyway/Liquibase
 - Multi-institution / tenant id

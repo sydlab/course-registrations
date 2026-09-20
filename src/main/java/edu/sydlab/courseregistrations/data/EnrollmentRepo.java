@@ -9,4 +9,6 @@ public interface EnrollmentRepo {
     int countActiveByCourseId(long courseId);
 
     long insertEnrollment(long studentId, long courseId, Timestamp enrollmentDate, String status);
+
+    int deleteEnrollment(long studentId, long courseId);
 }

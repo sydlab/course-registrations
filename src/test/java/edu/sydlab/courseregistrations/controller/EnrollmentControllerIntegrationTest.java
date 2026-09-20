@@ -140,6 +140,67 @@ class EnrollmentControllerIntegrationTest {
             .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void dropRemovesEnrollmentRow() throws Exception {
+        long studentId = insertStudent("STU-2026-001", "ada@student.edu");
+        long courseId = insertCourse("CS101", 1);
+        String body = """
+            {"studentId":%d,"courseId":%d}
+            """.formatted(studentId, courseId);
+
+        mockMvc.perform(post(ApiConstants.ENROLLMENTS_ADD_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+            .andExpect(status().isOk());
+
+        mockMvc.perform(post(ApiConstants.ENROLLMENTS_DROP_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+            .andExpect(status().isOk())
+            .andExpect(content().string(ApiConstants.DROPPED_SUCCESS));
+
+        Integer rowCount = jdbcTemplate.queryForObject(
+            "SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ?",
+            Integer.class,
+            studentId,
+            courseId);
+        Integer activeCount = jdbcTemplate.queryForObject(
+            "SELECT COUNT(*) FROM enrollments WHERE course_id = ? AND status = ?",
+            Integer.class,
+            courseId,
+            ApiConstants.ENROLLMENT_STATUS_ENROLLED);
+
+        assertEquals(0, rowCount);
+        assertEquals(0, activeCount);
+    }
+
+    @Test
+    void dropRejectsMissingEnrollment() throws Exception {
+        long studentId = insertStudent("STU-2026-001", "ada@student.edu");
+        long courseId = insertCourse("CS101", 1);
+
+        mockMvc.perform(post(ApiConstants.ENROLLMENTS_DROP_PATH)
+                .header(ApiConstants.REQUEST_ID_HEADER, "req-1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {"studentId":%d,"courseId":%d}
+                    """.formatted(studentId, courseId)))
+            .andExpect(status().isInternalServerError())
+            .andExpect(content().string(ApiConstants.DROP_FAILED));
+    }
+
+    @Test
+    void dropRequiresRequestIdHeader() throws Exception {
+        mockMvc.perform(post(ApiConstants.ENROLLMENTS_DROP_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {"studentId":1,"courseId":1}
+                    """))
+            .andExpect(status().isBadRequest());
+    }
+
     private long insertStudent(String studentNumber, String email) {
         jdbcTemplate.update(
             "INSERT INTO students (student_number, first_name, last_name, email, enrollment_year) "
