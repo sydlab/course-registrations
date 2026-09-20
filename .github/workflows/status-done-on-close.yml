@@ -10,7 +10,7 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Swap status labels to status: done
+      - name: Mark closed issue done
         uses: actions/github-script@v7
         with:
           script: |
